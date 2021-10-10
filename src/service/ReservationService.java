@@ -1,14 +1,16 @@
 package service;
 
+import model.Customer;
 import model.IRoom;
+import model.Reservation;
 import model.Room;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ReservationService {
 
     private final Map<String, IRoom> rooms = new HashMap<>();
+    private final List<Reservation> reservations = new ArrayList<>();
 
     public void addRoom(IRoom room) {
 
@@ -28,6 +30,16 @@ public class ReservationService {
 
     public Map<String, IRoom> getAllRooms() {
         return rooms;
+    }
+
+    public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+
+        Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
+
+        reservations.add(reservation);
+        // return reservation to display it for customer
+        return reservation;
+
     }
 
 }
