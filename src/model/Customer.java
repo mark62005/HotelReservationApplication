@@ -47,4 +47,13 @@ public class Customer {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Customer{ " +
+                "First name: '" + firstName + '\'' +
+                ", Last name: '" + lastName + '\'' +
+                ", Email: '" + email + '\'' +
+                " }";
+    }
+
 }
