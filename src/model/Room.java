@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Locale;
+
 public class Room implements IRoom {
 
     private String roomNumber;
@@ -41,10 +43,10 @@ public class Room implements IRoom {
 
     @Override
     public String toString() {
-        return "Room { " +
-                "Room number: ' " + roomNumber + '\'' +
+        return "Room{ " +
+                "Room number: '" + roomNumber + '\'' +
                 ", Room price: " + roomPrice +
-                ", Room type: " + roomType +
+                ", Room type: '" + String.valueOf(roomType).toLowerCase(Locale.ROOT) + '\'' +
                 " }";
     }
 
