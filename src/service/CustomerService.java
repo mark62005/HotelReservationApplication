@@ -9,6 +9,18 @@ public class CustomerService {
 
     private final Map<String, Customer> customers = new HashMap<>();
 
+    // Provide static reference for CustomerService
+    private static CustomerService instance;
+
+    private CustomerService(){};
+
+    public static CustomerService getInstance() {
+        if (instance == null) {
+            instance = new CustomerService();
+        }
+        return instance;
+    }
+
     public void addCustomer(String firstName, String lastName, String email) {
 
         Customer customer = new Customer(firstName, lastName, email);
