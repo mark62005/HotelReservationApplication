@@ -10,10 +10,16 @@ public class Reservation {
     private Date checkOutDate;
 
     public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+
+        // make sure the check-out date is after the check-in date
+        if (checkInDate.after(checkOutDate) || checkInDate.equals(checkOutDate)) {
+            throw new IllegalArgumentException("Invalid input! Check-out date must be after check-in date");
+        }
         this.customer = customer;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+
     }
 
     public Customer getCustomer() {
