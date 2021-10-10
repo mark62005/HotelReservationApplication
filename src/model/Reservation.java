@@ -48,4 +48,14 @@ public class Reservation {
         this.checkOutDate = checkOutDate;
     }
 
+    @Override
+    public String toString() {
+        return "Reservation{ " +
+                customer +
+                ", " + room +
+                ", Check-in date: " + checkInDate +
+                ", Check-out date: " + checkOutDate +
+                " }";
+    }
+
 }
