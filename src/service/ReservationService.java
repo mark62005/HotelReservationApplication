@@ -42,4 +42,8 @@ public class ReservationService {
 
     }
 
+    public List<Reservation> getAllReservations() {
+        return reservations;
+    }
+
 }
