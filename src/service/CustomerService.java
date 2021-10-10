@@ -20,4 +20,10 @@ public class CustomerService {
 
     }
 
+    public Customer getCustomer(String email) {
+
+        return customers.getOrDefault(email, null);
+
+    }
+
 }
