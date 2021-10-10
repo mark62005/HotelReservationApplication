@@ -22,4 +22,8 @@ public class ReservationService {
 
     }
 
+    public IRoom getRoom(String roomNumber) {
+        return rooms.get(roomNumber);
+    }
+
 }
