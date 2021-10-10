@@ -1,6 +1,6 @@
 package model;
 
-public class Room {
+public class Room implements IRoom {
 
     private String roomNumber;
     private Double roomPrice;
@@ -12,6 +12,7 @@ public class Room {
         this.roomType = roomType;
     }
 
+    @Override
     public String getRoomNumber() {
         return roomNumber;
     }
@@ -20,6 +21,7 @@ public class Room {
         this.roomNumber = roomNumber;
     }
 
+    @Override
     public Double getRoomPrice() {
         return roomPrice;
     }
@@ -28,12 +30,22 @@ public class Room {
         this.roomPrice = roomPrice;
     }
 
+    @Override
     public RoomType getRoomType() {
         return roomType;
     }
 
     public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
+    }
+
+    @Override
+    public String toString() {
+        return "Room { " +
+                "Room number: ' " + roomNumber + '\'' +
+                ", Room price: " + roomPrice +
+                ", Room type: " + roomType +
+                " }";
     }
 
 }
