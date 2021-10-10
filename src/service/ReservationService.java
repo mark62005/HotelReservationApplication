@@ -26,4 +26,8 @@ public class ReservationService {
         return rooms.get(roomNumber);
     }
 
+    public Map<String, IRoom> getAllRooms() {
+        return rooms;
+    }
+
 }
