@@ -25,6 +25,7 @@ public class CustomerService {
 
         Customer customer = new Customer(firstName, lastName, email);
 
+        // make sure all te emails in customer map are unique
         if (getAllCustomers().containsKey(email)) {
             throw new IllegalArgumentException("Error! This email is taken, please try another one.");
         }
