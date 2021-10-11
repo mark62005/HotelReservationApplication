@@ -61,6 +61,7 @@ public class ReservationService {
                 //  and the check-out date input is before the check-in date of that reservation
                 .filter(r -> r.getCheckInDate().after(checkOutDate) && r.getCheckOutDate().before(checkInDate))
                 .map(Reservation::getRoom)
+                .sorted()
                 .collect(Collectors.toList());
 
     }
