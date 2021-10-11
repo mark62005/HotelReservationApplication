@@ -103,11 +103,16 @@ public class AdminMenu {
                 } else {
 
                     // print the customer list
-                    System.out.println("Customer List: ");
+                    System.out.print("\nCustomer List: ");
                     for (Customer customer : customers.values()) {
                         System.out.printf("\n%d. %s", i, customer);
                         i++;
+
+                        if (i == customers.size() + 1) {
+                            System.out.println();
+                        }
                     }
+                    System.out.println();
 
                 }
 
@@ -145,11 +150,16 @@ public class AdminMenu {
                 } else {
 
                     // print the room list
-                    System.out.println("Room List: ");
+                    System.out.print("\nRoom List: ");
                     for (IRoom room : rooms.values()) {
-                        System.out.printf("\n%d\\. %s", i, room);
+                        System.out.printf("\n%d. %s", i, room);
                         i++;
+
+                        if (i == rooms.size() + 1) {
+                            System.out.println();
+                        }
                     }
+                    System.out.println();
 
                 }
 
@@ -187,11 +197,16 @@ public class AdminMenu {
                 } else {
 
                     // print the reservation list
-                    System.out.println("Reservation List: ");
+                    System.out.print("\nReservation List: ");
                     for (Reservation reservation : reservations) {
-                        System.out.printf("\n%d\\. %s", i, reservation);
+                        System.out.printf("\n%d. %s", i, reservation);
                         i++;
+
+                        if (i == reservations.size() + 1) {
+                            System.out.println();
+                        }
                     }
+                    System.out.println();
 
                 }
 
@@ -257,6 +272,8 @@ public class AdminMenu {
         adminResource.addRoom(roomToAdd);
         System.out.println("Room added successfully.");
 
+        printAdminMenu();
+
     }
 
     // handle option 5: Add test data
@@ -265,6 +282,8 @@ public class AdminMenu {
         addCustomerSamples();
         addRoomSamples();
         addReservationSamples();
+
+        printAdminMenu();
 
     }
 
