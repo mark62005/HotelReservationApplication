@@ -19,6 +19,10 @@ public class HotelResource {
         return instance;
     }
 
+    public void addCustomer(String firstName, String lastName, String email) {
+        customerService.addCustomer(firstName, lastName, email);
+    }
+
     public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
