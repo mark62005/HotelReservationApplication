@@ -24,9 +24,9 @@ public class MainMenu {
     public static void main(String[] args) {
 
         // display initial menu
-//        printMainMenu();
+        printMainMenu();
 
-        enterCheckInDate();
+        handleMainOptions();
 
     }
 
@@ -44,6 +44,35 @@ public class MainMenu {
                 """;
 
         System.out.println(mainMenu);
+
+    }
+
+    public static void handleMainOptions() {
+
+        try {
+
+            // ask user to enter their option
+            int option = Integer.parseInt(scanner.nextLine());
+
+            // make sure user enter a number between 1 - 5
+            while (option > 5 || option < 1) {
+                System.out.println("Invalid input. Please enter your option again (1 - 5): ");
+                option = Integer.parseInt(scanner.nextLine());
+            }
+
+            switch (option) {
+                case 1 -> enterCheckInDate();
+                case 2 -> seeMyReservations();
+                case 3 -> createAnAccount();
+                case 4 -> AdminMenu.main(null);
+                case 5 -> System.exit(0);
+                default -> {}
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter your option again (1 - 5): ");
+            handleMainOptions();
+        }
 
     }
 
