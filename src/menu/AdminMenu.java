@@ -111,12 +111,9 @@ public class AdminMenu {
     // handle option 3: See all Reservations
     public static void seeAllReservations() {
 
-        List<Reservation> reservations = adminResource.getAllReservations();
+        try {
 
-        if (reservations.isEmpty()) {
-            System.out.println("Sorry, the reservation list is empty.");
-        } else {
-
+            List<Reservation> reservations = adminResource.getAllReservations();
             int i = 1;
 
             // print the reservation list
@@ -126,6 +123,8 @@ public class AdminMenu {
                 i++;
             }
 
+        } catch (NullPointerException e) {
+            System.out.println("Sorry, the reservation list is empty.");
         }
 
     }
