@@ -89,7 +89,7 @@ public class MainMenu {
 
     }
 
-    public static String handleEmailInput() {
+    public static String handleEmailInput(String action) {
 
         // ask user to enter their email
         System.out.println("Please enter your email: ");
@@ -101,12 +101,14 @@ public class MainMenu {
             emailInput = scanner.nextLine();
         }
 
-        // make sure the email exists in the customer map
-        while (!adminResource.getAllCustomers().containsKey(emailInput)) {
-            System.out.println("This email doesn't exist, please try another one.");
-            emailInput = scanner.nextLine();
+        if (!action.equals("create account")) {
+            // make sure the email exists in the customer map
+            while (!adminResource.getAllCustomers().containsKey(emailInput)) {
+                System.out.println("This email doesn't exist, please try another one.");
+                emailInput = scanner.nextLine();
+            }
+            return emailInput;
         }
-
         return emailInput;
 
     }
@@ -178,7 +180,7 @@ public class MainMenu {
             }
 
             // ask user to enter their email
-            String emailInput = handleEmailInput();
+            String emailInput = handleEmailInput("reserve a room");
 
             Customer customer = hotelResource.getCustomer(emailInput);
 
@@ -201,7 +203,7 @@ public class MainMenu {
         try {
 
             // ask user to enter their email
-            String emailInput = handleEmailInput();
+            String emailInput = handleEmailInput("see my reservations");
 
             List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
 
@@ -229,7 +231,7 @@ public class MainMenu {
         String lastNameInput = scanner.nextLine().trim();
 
         // ask user to enter their email
-        String emailInput = handleEmailInput();
+        String emailInput = handleEmailInput("create account");
 
         hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
         System.out.println("Account created successfully.");
