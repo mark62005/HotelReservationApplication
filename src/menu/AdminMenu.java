@@ -27,7 +27,9 @@ public class AdminMenu {
                 2. See all Rooms
                 3. See all Reservations
                 4. Add a Room
-                5. Back to Main Menu
+                5. Add test data
+                6. Clear test data
+                7. Back to Main Menu
                 
                 Please enter your option (1 - 5):\040""";
 
@@ -46,7 +48,7 @@ public class AdminMenu {
                 int option = Integer.parseInt(scanner.nextLine());
 
                 // make sure user enter a number between 1 - 5
-                while (option > 5 || option < 1) {
+                while (option > 7 || option < 1) {
                     System.out.println("Invalid input. Please enter your option again (1 - 5): ");
                     option = Integer.parseInt(scanner.nextLine());
                 }
