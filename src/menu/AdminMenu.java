@@ -2,6 +2,7 @@ package menu;
 
 import api.AdminResource;
 import api.HotelResource;
+import com.sun.tools.javac.Main;
 import model.*;
 
 import java.util.*;
@@ -16,6 +17,8 @@ public class AdminMenu {
 
         // display initial admin menu
         printAdminMenu();
+
+        handleAdminOptions();
 
     }
 
@@ -32,6 +35,35 @@ public class AdminMenu {
                 """;
 
         System.out.println(adminMenu);
+    }
+
+    public static void handleAdminOptions() {
+
+        try {
+
+            // ask user to enter their option
+            int option = Integer.parseInt(scanner.nextLine());
+
+            // make sure user enter a number between 1 - 5
+            while (option > 5 || option < 1) {
+                System.out.println("Invalid input. Please enter your option again (1 - 5): ");
+                option = Integer.parseInt(scanner.nextLine());
+            }
+
+            switch (option) {
+                case 1 -> seeAllCustomers();
+                case 2 -> seeAllRooms();
+                case 3 -> seeAllReservations();
+                case 4 -> addARoom();
+                case 5 -> MainMenu.main(null);
+                default -> {}
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter your option again (1 - 5): ");
+            handleAdminOptions();
+        }
+
     }
 
     // handle option 1: See all Customers
