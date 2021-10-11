@@ -53,4 +53,8 @@ public class HotelResource {
         return reservationService.getReservationsOfACustomer(email);
     }
 
+    public List<Reservation> getAllReservations() {
+        return reservationService.getAllReservations();
+    }
+
 }
