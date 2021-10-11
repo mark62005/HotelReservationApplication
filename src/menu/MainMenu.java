@@ -40,8 +40,8 @@ public class MainMenu {
                 3. Create an account
                 4. Go to Admin Menu
                 5. Exit
-                Please enter your option (1 - 5):
-                """;
+                
+                Please enter your option (1 - 5):\040""";
 
         System.out.println(mainMenu);
 
@@ -49,29 +49,39 @@ public class MainMenu {
 
     public static void handleMainOptions() {
 
-        try {
+        boolean keepRunning = true;
 
-            // ask user to enter their option
-            int option = Integer.parseInt(scanner.nextLine());
+        while (keepRunning) {
 
-            // make sure user enter a number between 1 - 5
-            while (option > 5 || option < 1) {
+            try {
+
+                // ask user to enter their option
+                int option = Integer.parseInt(scanner.nextLine());
+
+                // make sure user enter a number between 1 - 5
+                while (option > 5 || option < 1) {
+                    System.out.println("Invalid input. Please enter your option again (1 - 5): ");
+                    option = Integer.parseInt(scanner.nextLine());
+                }
+
+                switch (option) {
+                    case 1 -> enterCheckInDate();
+                    case 2 -> seeMyReservations();
+                    case 3 -> createAnAccount();
+                    case 4 -> {
+                        AdminMenu.main(null);
+                        // break the while loop
+                        keepRunning = false;
+                    }
+                    case 5 -> System.exit(0);
+                    default -> {}
+                }
+
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter your option again (1 - 5): ");
-                option = Integer.parseInt(scanner.nextLine());
+                handleMainOptions();
             }
 
-            switch (option) {
-                case 1 -> enterCheckInDate();
-                case 2 -> seeMyReservations();
-                case 3 -> createAnAccount();
-                case 4 -> AdminMenu.main(null);
-                case 5 -> System.exit(0);
-                default -> {}
-            }
-
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter your option again (1 - 5): ");
-            handleMainOptions();
         }
 
     }
