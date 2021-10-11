@@ -48,6 +48,7 @@ public class MainMenu {
 
     }
 
+    // for option 1
     public static void enterCheckInDate() {
 
         try {
@@ -134,6 +135,34 @@ public class MainMenu {
             findAndReserveARoom(checkInDateInput);
         } catch (NullPointerException e) {
             System.out.println(e.getLocalizedMessage());
+        }
+
+    }
+
+    // for option 2
+    public static void seeMyReservations() {
+
+        System.out.println("Please enter your email: ");
+        String emailInput = scanner.nextLine();
+
+        // make sure the email exists in the customer map
+        while (!adminResource.getAllCustomers().containsKey(emailInput)) {
+            System.out.println("This email doesn't exist, please try another one.");
+            emailInput = scanner.nextLine();
+        }
+
+        List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
+
+        if (myReservations.isEmpty()) {
+            System.out.println("You haven't made any reservation yet.");
+        } else {
+
+            // print out the reservation list of that customer
+            System.out.println("Your reservations: ");
+            for (int i = 0; i < myReservations.size(); i++) {
+                System.out.println(i + ". " + myReservations.indexOf(i));
+            }
+
         }
 
     }
