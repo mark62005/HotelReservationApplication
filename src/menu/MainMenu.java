@@ -196,14 +196,12 @@ public class MainMenu {
     // for option 2: See my reservations
     public static void seeMyReservations() {
 
-        // ask user to enter their email
-        String emailInput = handleEmailInput();
+        try {
 
-        List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
+            // ask user to enter their email
+            String emailInput = handleEmailInput();
 
-        if (myReservations.isEmpty()) {
-            System.out.println("You haven't made any reservation yet.");
-        } else {
+            List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
 
             // print out the reservation list of that customer
             System.out.println("Your reservations: ");
@@ -211,6 +209,8 @@ public class MainMenu {
                 System.out.printf("\n%d\\. %s", i + 1, myReservations.get(i));
             }
 
+        } catch (NullPointerException e) {
+            System.out.println("You haven't made any reservation yet.");
         }
 
     }
