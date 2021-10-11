@@ -2,13 +2,9 @@ package menu;
 
 import api.AdminResource;
 import api.HotelResource;
-import model.Customer;
-import model.IRoom;
-import model.Reservation;
+import model.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class AdminMenu {
 
@@ -101,6 +97,53 @@ public class AdminMenu {
             }
 
         }
+
+    }
+
+    // handle option 4: Add a Room
+    public static void addARoom() {
+
+        // ask admin to enter a room number
+        System.out.println("Please enter a room number: ");
+        String roomNumberInput = scanner.nextLine().trim();
+
+        // make sure all the room numbers in the room list are unique
+        while (adminResource.getAllRooms().containsKey(roomNumberInput)) {
+            System.out.println("Sorry, this room number is already taken, please try another one: ");
+            roomNumberInput = scanner.nextLine().trim();
+        }
+
+        // ask admin to enter a room price per night
+        System.out.println("Please enter a room price per night: ");
+        double roomPriceInput = Double.parseDouble(scanner.nextLine().trim());
+
+        // make sure room price >= 0
+        while (roomPriceInput < 0) {
+            System.out.println("Sorry, the room price per night cannot be less than $0.");
+            roomPriceInput = Double.parseDouble(scanner.nextLine().trim());
+        }
+
+        // ask admin to enter a room type
+        System.out.println("Please choose a room type, single room or double room? (s/d)");
+        String roomTypeInput = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+
+        // make sure room type input only matches "s" or "d"
+        List<String> conditions = Arrays.asList("s", "d");
+        while (!conditions.contains(roomTypeInput)) {
+            System.out.println("Please choose a room type, single room or double room? (s/d)");
+            roomTypeInput = scanner.nextLine().trim().toLowerCase(Locale.ROOT);
+        }
+
+        RoomType roomType = null;
+        if (roomTypeInput.equals("s")) {
+            roomType = RoomType.SINGLE;
+        } else if (roomTypeInput.equals("d")) {
+            roomType = RoomType.DOUBLE;
+        }
+
+        IRoom roomToAdd = new Room(roomNumberInput, roomPriceInput, roomType);
+        adminResource.addRoom(roomToAdd);
+        System.out.println("Room added successfully.");
 
     }
 
