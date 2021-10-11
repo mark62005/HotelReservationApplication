@@ -23,36 +23,12 @@ public class MainMenu {
 
     public static void main(String[] args) {
 
+        boolean keepRunning = true;
+
         // display initial menu
         printMainMenu();
 
-        handleMainOptions();
-
-    }
-
-    public static void printMainMenu() {
-
-        String mainMenu = """
-                
-                Main Menu
-                1. Find and reserve a room
-                2. See my reservations
-                3. Create an account
-                4. Go to Admin Menu
-                5. Exit
-                
-                Please enter your option (1 - 5):\040""";
-
-        System.out.println(mainMenu);
-
-    }
-
-    public static void handleMainOptions() {
-
-        boolean keepRunning = true;
-
         while (keepRunning) {
-
             try {
 
                 // ask user to enter their option
@@ -79,10 +55,26 @@ public class MainMenu {
 
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter your option again (1 - 5): ");
-                handleMainOptions();
+                MainMenu.main(null);
             }
-
         }
+
+    }
+
+    public static void printMainMenu() {
+
+        String mainMenu = """
+                
+                Main Menu
+                1. Find and reserve a room
+                2. See my reservations
+                3. Create an account
+                4. Go to Admin Menu
+                5. Exit
+                
+                Please enter your option (1 - 5):\040""";
+
+        System.out.println(mainMenu);
 
     }
 
