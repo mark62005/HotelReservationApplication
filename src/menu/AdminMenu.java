@@ -31,37 +31,46 @@ public class AdminMenu {
                 3. See all Reservations
                 4. Add a Room
                 5. Back to Main Menu
-                Please enter your option (1 - 5):
-                """;
+                
+                Please enter your option (1 - 5):\040""";
 
         System.out.println(adminMenu);
     }
 
     public static void handleAdminOptions() {
 
-        try {
+        boolean keepRunning = true;
 
-            // ask user to enter their option
-            int option = Integer.parseInt(scanner.nextLine());
+        while (keepRunning) {
 
-            // make sure user enter a number between 1 - 5
-            while (option > 5 || option < 1) {
+            try {
+
+                // ask user to enter their option
+                int option = Integer.parseInt(scanner.nextLine());
+
+                // make sure user enter a number between 1 - 5
+                while (option > 5 || option < 1) {
+                    System.out.println("Invalid input. Please enter your option again (1 - 5): ");
+                    option = Integer.parseInt(scanner.nextLine());
+                }
+
+                switch (option) {
+                    case 1 -> seeAllCustomers();
+                    case 2 -> seeAllRooms();
+                    case 3 -> seeAllReservations();
+                    case 4 -> addARoom();
+                    case 5 -> {
+                        MainMenu.main(null);
+                        keepRunning = false;
+                    }
+                    default -> {}
+                }
+
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter your option again (1 - 5): ");
-                option = Integer.parseInt(scanner.nextLine());
+                handleAdminOptions();
             }
 
-            switch (option) {
-                case 1 -> seeAllCustomers();
-                case 2 -> seeAllRooms();
-                case 3 -> seeAllReservations();
-                case 4 -> addARoom();
-                case 5 -> MainMenu.main(null);
-                default -> {}
-            }
-
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter your option again (1 - 5): ");
-            handleAdminOptions();
         }
 
     }
