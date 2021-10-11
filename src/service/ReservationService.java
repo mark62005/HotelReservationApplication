@@ -54,6 +54,17 @@ public class ReservationService {
 
     }
 
+    public Date addDays(Date date, int daysToAdd) {
+
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, daysToAdd);
+
+        return calendar.getTime();
+
+    }
+
     public List<Reservation> getReservationsOfACustomer(String email) {
 
         // find reservation which matches the same email, and return a new list
