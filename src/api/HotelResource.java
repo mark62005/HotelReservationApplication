@@ -7,6 +7,7 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Date;
+import java.util.List;
 
 public class HotelResource {
 
@@ -38,6 +39,10 @@ public class HotelResource {
 
     public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
         return reservationService.reserveARoom(customer, room, checkInDate, checkOutDate);
+    }
+
+    public List<IRoom> findAvailableRooms(Date checkInDate, Date checkOutDate) {
+        return reservationService.findAvailableRooms(checkInDate, checkOutDate);
     }
 
 }
