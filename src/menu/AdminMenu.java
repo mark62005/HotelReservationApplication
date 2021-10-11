@@ -69,12 +69,9 @@ public class AdminMenu {
     // handle option 1: See all Customers
     public static void seeAllCustomers() {
 
-        Map<String, Customer> customers = adminResource.getAllCustomers();
+        try {
 
-        if (customers.isEmpty()) {
-            System.out.println("Sorry, the customer list is empty.");
-        } else {
-
+            Map<String, Customer> customers = adminResource.getAllCustomers();
             int i = 1;
 
             // print the customer list
@@ -84,6 +81,8 @@ public class AdminMenu {
                 i++;
             }
 
+        } catch (NullPointerException e) {
+            System.out.println("Sorry, the customer list is empty.");
         }
 
     }
