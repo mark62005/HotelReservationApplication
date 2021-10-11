@@ -45,4 +45,8 @@ public class HotelResource {
         return reservationService.findAvailableRooms(checkInDate, checkOutDate);
     }
 
+    public List<IRoom> recommendAlternatives(Date checkInDate, Date checkOutDate) {
+        return reservationService.recommendAlternatives(checkInDate, checkOutDate);
+    }
+
 }
