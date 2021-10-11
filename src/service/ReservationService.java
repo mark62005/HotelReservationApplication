@@ -10,8 +10,19 @@ import java.util.stream.Collectors;
 
 public class ReservationService {
 
+    private static ReservationService instance;
     private final Map<String, IRoom> rooms = new HashMap<>();
     private final List<Reservation> reservations = new ArrayList<>();
+
+    // provide a static reference for Singleton Pattern
+    private ReservationService(){}
+
+    public static ReservationService getInstance() {
+        if (instance == null) {
+            instance = new ReservationService();
+        }
+        return instance;
+    }
 
     public void addRoom(IRoom room) {
 
