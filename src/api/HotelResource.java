@@ -12,8 +12,8 @@ import java.util.List;
 public class HotelResource {
 
     private static HotelResource instance;
-    private CustomerService customerService;
-    private ReservationService reservationService;
+    private final CustomerService customerService = CustomerService.getInstance();
+    private final ReservationService reservationService = ReservationService.getInstance();
 
     // provide static reference
     private HotelResource(){}

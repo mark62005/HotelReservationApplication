@@ -1,14 +1,19 @@
 package menu;
 
 import api.AdminResource;
+import api.HotelResource;
 import model.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class AdminMenu {
 
     public static Scanner scanner = new Scanner(System.in);
     public static AdminResource adminResource = AdminResource.getInstance();
+    public static HotelResource hotelResource = HotelResource.getInstance();
 
     public static void main(String[] args) {
 
@@ -58,7 +63,8 @@ public class AdminMenu {
                     case 2 -> seeAllRooms();
                     case 3 -> seeAllReservations();
                     case 4 -> addARoom();
-                    case 5 -> {
+                    case 5 -> addTestData();
+                    case 7 -> {
                         MainMenu.main(null);
                         keepRunning = false;
                     }
@@ -185,6 +191,86 @@ public class AdminMenu {
     }
 
     // handle option 5: Add test data
-    pu
+    public static void addTestData() {
+
+        addCustomerSamples();
+        addRoomSamples();
+        addReservationSamples();
+
+    }
+
+    // add customer sample data
+    public static void addCustomerSamples() {
+
+        hotelResource.addCustomer("John", "Doe","john@gmail.com");
+        hotelResource.addCustomer("Max", "Musterman","Muster@web.com");
+        hotelResource.addCustomer("Frieda", "Meyer","F.Meyer@gmx.com");
+        hotelResource.addCustomer("Carla", "Schmidt","CarlaSchmidt@webmail.com");
+
+    }
+
+    // add room sample data
+    public static void addRoomSamples() {
+
+        IRoom room1 = new Room("100", 50.0, RoomType.SINGLE);
+        IRoom room2 = new Room("101", 70.0, RoomType.DOUBLE);
+        IRoom room3 = new Room("102", 90.0, RoomType.SINGLE);
+        IRoom room4 = new Room("103", 110.0, RoomType.DOUBLE);
+
+        adminResource.addRoom(room1);
+        adminResource.addRoom(room2);
+        adminResource.addRoom(room3);
+        adminResource.addRoom(room4);
+
+    }
+
+    // add reservation sample data
+    public static void addReservationSamples() {
+
+        Customer john = hotelResource.getCustomer("john@gmail.com");
+        Customer max = hotelResource.getCustomer("Muster@web.com");
+        Customer frieda = hotelResource.getCustomer("F.Meyer@gmx.com");
+        Customer carla = hotelResource.getCustomer("CarlaSchmidt@webmail.com");
+
+        IRoom room1 = hotelResource.getRoom("100");
+        IRoom room2 = hotelResource.getRoom("101");
+        IRoom room3 = hotelResource.getRoom("102");
+        IRoom room4 = hotelResource.getRoom("103");
+
+        Date checkInDate1 = null;
+        Date checkOutDate1 = null;
+        Date checkInDate2 = null;
+        Date checkOutDate2 = null;
+        Date checkInDate3 = null;
+        Date checkOutDate3 = null;
+        Date checkInDate4 = null;
+        Date checkOutDate4 = null;
+
+        try {
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            checkInDate1 = dateFormat.parse("23/12/2020");
+            checkOutDate1 = dateFormat.parse("31/12/2020");
+
+            checkInDate2 = dateFormat.parse("04/01/2021");
+            checkOutDate2 = dateFormat.parse("12/01/2021");
+
+            checkInDate3 = dateFormat.parse("26/12/2020");
+            checkOutDate3 = dateFormat.parse("27/12/2020");
+
+            checkInDate4 = dateFormat.parse("12/12/2020");
+            checkOutDate4 = dateFormat.parse("19/01/2021");
+
+        }  catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        hotelResource.reserveARoom(john, room1, checkInDate1, checkOutDate1);
+        hotelResource.reserveARoom(max, room2, checkInDate2, checkOutDate2);
+        hotelResource.reserveARoom(frieda, room3, checkInDate3, checkOutDate3);
+        hotelResource.reserveARoom(carla, room4, checkInDate4, checkOutDate4);
+
+    }
 
 }
