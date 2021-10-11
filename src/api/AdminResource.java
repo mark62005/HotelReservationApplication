@@ -2,9 +2,11 @@ package api;
 
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 import service.CustomerService;
 import service.ReservationService;
 
+import java.util.List;
 import java.util.Map;
 
 public class AdminResource {
@@ -39,6 +41,8 @@ public class AdminResource {
         return customerService.getAllCustomers();
     }
 
-
+    public List<Reservation> getAllReservations() {
+        return reservationService.getAllReservations();
+    }
 
 }
