@@ -4,7 +4,9 @@ import api.AdminResource;
 import api.HotelResource;
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -73,6 +75,28 @@ public class AdminMenu {
             System.out.println("Room List: ");
             for (IRoom room : rooms.values()) {
                 System.out.printf("\n%d\\. %s", i, room);
+                i++;
+            }
+
+        }
+
+    }
+
+    // handle option 3: See all Reservations
+    public static void seeAllReservations() {
+
+        List<Reservation> reservations = adminResource.getAllReservations();
+
+        if (reservations.isEmpty()) {
+            System.out.println("Sorry, the reservation list is empty.");
+        } else {
+
+            int i = 1;
+
+            // print the reservation list
+            System.out.println("Reservation List: ");
+            for (Reservation reservation : reservations) {
+                System.out.printf("\n%d\\. %s", i, reservation);
                 i++;
             }
 
