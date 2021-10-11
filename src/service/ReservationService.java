@@ -65,6 +65,22 @@ public class ReservationService {
 
     }
 
+    public List<IRoom> recommendAlternatives(Date checkInDate, Date checkOutDate) {
+
+        // if all the rooms are booked for the original date range, add the date range for 7 days,
+        //  and recommend a room list for that date range
+        Date alternativeCheckInDate = addDays(checkInDate, 7);
+        Date alternativeCheckOutDate = addDays(checkOutDate, 7);
+
+        // base case: if the available room list is not empty, return that list
+        if (!findAvailableRooms(alternativeCheckInDate, alternativeCheckOutDate).isEmpty()) {
+            return findAvailableRooms(alternativeCheckInDate, alternativeCheckOutDate);
+        }
+        // recursive case
+        return recommendAlternatives(alternativeCheckInDate, alternativeCheckOutDate);
+
+    }
+
     public List<Reservation> getReservationsOfACustomer(String email) {
 
         // find reservation which matches the same email, and return a new list
