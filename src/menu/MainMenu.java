@@ -159,7 +159,7 @@ public class MainMenu {
             // print the list of available rooms
             System.out.println("Rooms that are available: ");
             for (int i = 0; i < availableRooms.size(); i++) {
-                System.out.printf("\n%d\\. %s", i, availableRooms.get(i).getRoomNumber());
+                System.out.printf("\n%d\\. %s", i + 1, availableRooms.get(i).getRoomNumber());
             }
 
             // ask user to choose a room from the list

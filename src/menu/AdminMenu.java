@@ -3,6 +3,7 @@ package menu;
 import api.AdminResource;
 import api.HotelResource;
 import model.Customer;
+import model.IRoom;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -50,6 +51,28 @@ public class AdminMenu {
             System.out.println("Customer List: ");
             for (Customer customer : customers.values()) {
                 System.out.printf("\n%d\\. %s", i, customer);
+                i++;
+            }
+
+        }
+
+    }
+
+    // handle option 2: See all Rooms
+    public static void seeAllRooms() {
+
+        Map<String, IRoom> rooms = adminResource.getAllRooms();
+
+        if (rooms.isEmpty()) {
+            System.out.println("Sorry, the room list is empty.");
+        } else {
+
+            int i = 1;
+
+            // print the room list
+            System.out.println("Room List: ");
+            for (IRoom room : rooms.values()) {
+                System.out.printf("\n%d\\. %s", i, room);
                 i++;
             }
 
