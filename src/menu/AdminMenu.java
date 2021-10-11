@@ -131,21 +131,42 @@ public class AdminMenu {
     // handle option 2: See all Rooms
     public static void seeAllRooms() {
 
-        try {
+        boolean keepRunning = true;
 
-            Map<String, IRoom> rooms = adminResource.getAllRooms();
-            int i = 1;
+        while (keepRunning) {
+            try {
 
-            // print the room list
-            System.out.println("Room List: ");
-            for (IRoom room : rooms.values()) {
-                System.out.printf("\n%d\\. %s", i, room);
-                i++;
+                Map<String, IRoom> rooms = adminResource.getAllRooms();
+                int i = 1;
+
+                if (rooms.isEmpty()) {
+                    System.out.println("Sorry, the room list is empty.");
+                    keepRunning = false;
+                } else {
+
+                    // print the room list
+                    System.out.println("Room List: ");
+                    for (IRoom room : rooms.values()) {
+                        System.out.printf("\n%d\\. %s", i, room);
+                        i++;
+                    }
+
+                }
+
+                System.out.println("Back to Admin Menu? (y/n)");
+                String confirmOption = handleConfirmOptions();
+
+                if (confirmOption.equals("y")) {
+                    keepRunning = false;
+                } else if (confirmOption.equals("n")) {
+                    seeAllRooms();
+                }
+
+            } catch (NullPointerException e) {
+                System.out.println("Sorry, the room list is empty.");
             }
-
-        } catch (NullPointerException e) {
-            System.out.println("Sorry, the room list is empty.");
         }
+        printAdminMenu();
 
     }
 
