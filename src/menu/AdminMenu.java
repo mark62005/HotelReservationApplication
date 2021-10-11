@@ -49,7 +49,7 @@ public class AdminMenu {
             // print the customer list
             System.out.println("Customer List: ");
             for (Customer customer : customers.values()) {
-                System.out.printf("%d\\. %s", i, customer);
+                System.out.printf("\n%d\\. %s", i, customer);
                 i++;
             }
 

@@ -208,7 +208,7 @@ public class MainMenu {
             // print out the reservation list of that customer
             System.out.println("Your reservations: ");
             for (int i = 0; i < myReservations.size(); i++) {
-                System.out.println(i + ". " + myReservations.get(i));
+                System.out.printf("\n%d\\. %s", i + 1, myReservations.get(i));;
             }
 
         }
