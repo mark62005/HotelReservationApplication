@@ -2,8 +2,11 @@ package api;
 
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 import service.CustomerService;
 import service.ReservationService;
+
+import java.util.Date;
 
 public class HotelResource {
 
@@ -31,6 +34,10 @@ public class HotelResource {
 
     public IRoom getRoom(String roomNumber) {
         return reservationService.getRoom(roomNumber);
+    }
+
+    public Reservation reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+        return reservationService.reserveARoom(customer, room, checkInDate, checkOutDate);
     }
 
 }
