@@ -1,6 +1,7 @@
 package api;
 
 import model.Customer;
+import model.IRoom;
 import service.CustomerService;
 import service.ReservationService;
 
@@ -8,6 +9,7 @@ public class HotelResource {
 
     private static HotelResource instance;
     private CustomerService customerService;
+    private ReservationService reservationService;
 
     // provide static reference
     private HotelResource(){}
@@ -25,6 +27,10 @@ public class HotelResource {
 
     public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
+    }
+
+    public IRoom getRoom(String roomNumber) {
+        return reservationService.getRoom(roomNumber);
     }
 
 }
