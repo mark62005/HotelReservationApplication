@@ -49,4 +49,8 @@ public class HotelResource {
         return reservationService.recommendAlternatives(checkInDate, checkOutDate);
     }
 
+    public List<Reservation> getReservationsOfACustomer(String email) {
+        return reservationService.getReservationsOfACustomer(email);
+    }
+
 }
