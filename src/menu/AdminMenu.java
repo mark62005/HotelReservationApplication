@@ -1,8 +1,6 @@
 package menu;
 
 import api.AdminResource;
-import api.HotelResource;
-import com.sun.tools.javac.Main;
 import model.*;
 
 import java.util.*;
@@ -10,7 +8,6 @@ import java.util.*;
 public class AdminMenu {
 
     public static Scanner scanner = new Scanner(System.in);
-    public static HotelResource hotelResource = HotelResource.getInstance();
     public static AdminResource adminResource = AdminResource.getInstance();
 
     public static void main(String[] args) {
