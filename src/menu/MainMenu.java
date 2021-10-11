@@ -132,6 +132,8 @@ public class MainMenu {
         } catch (ParseException e) {
             System.out.println("Invalid format for date. Please use the format (dd/mm/yyyy).");
             findAndReserveARoom(checkInDateInput);
+        } catch (NullPointerException e) {
+            System.out.println(e.getLocalizedMessage());
         }
 
     }

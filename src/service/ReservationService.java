@@ -56,6 +56,11 @@ public class ReservationService {
 
     public List<IRoom> findAvailableRooms(Date checkInDate, Date checkOutDate) {
 
+        // if the room list is empty, throw an Exception
+        if (rooms.isEmpty()) {
+            throw new NullPointerException("Sorry, there is no rooms created in our database");
+        }
+
         return reservations.stream()
                 // filter reservations which the check-in date input is after the check-out date of that reservation
                 //  and the check-out date input is before the check-in date of that reservation
