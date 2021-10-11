@@ -35,4 +35,8 @@ public class AdminResource {
         return reservationService.getAllRooms();
     }
 
+    public Map<String, Customer> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
+
 }
