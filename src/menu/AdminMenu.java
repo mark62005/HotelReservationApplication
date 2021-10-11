@@ -1,6 +1,17 @@
 package menu;
 
+import api.AdminResource;
+import api.HotelResource;
+import model.Customer;
+
+import java.util.Map;
+import java.util.Scanner;
+
 public class AdminMenu {
+
+    public static Scanner scanner = new Scanner(System.in);
+    public static HotelResource hotelResource = HotelResource.getInstance();
+    public static AdminResource adminResource = AdminResource.getInstance();
 
     public static void main(String[] args) {
 
@@ -23,4 +34,27 @@ public class AdminMenu {
 
         System.out.println(adminMenu);
     }
+
+    // handle option 1: See all Customers
+    public static void seeAllCustomers() {
+
+        Map<String, Customer> customers = adminResource.getAllCustomers();
+
+        if (customers.isEmpty()) {
+            System.out.println("Sorry, the customer list is empty.");
+        } else {
+
+            int i = 1;
+
+            // print the customer list
+            System.out.println("Customer List: ");
+            for (Customer customer : customers.values()) {
+                System.out.printf("%d\\. %s", i, customer);
+                i++;
+            }
+
+        }
+
+    }
+
 }
