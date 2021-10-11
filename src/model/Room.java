@@ -45,7 +45,7 @@ public class Room implements IRoom {
     public String toString() {
         return "Room{ " +
                 "Room number: '" + roomNumber + '\'' +
-                ", Room price: $" + roomPrice +
+                ", Room price per night: $" + roomPrice +
                 ", Room type: '" + String.valueOf(roomType).toLowerCase(Locale.ROOT) + '\'' +
                 " }";
     }
