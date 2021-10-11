@@ -43,6 +43,17 @@ public class ReservationService {
 
     }
 
+    public List<IRoom> findAvailableRooms(Date checkInDate, Date checkOutDate) {
+
+        return reservations.stream()
+                // filter reservations which the check-in date input is after the check-out date of that reservation
+                //  and the check-out date input is before the check-in date of that reservation
+                .filter(r -> r.getCheckInDate().after(checkOutDate) && r.getCheckOutDate().before(checkInDate))
+                .map(Reservation::getRoom)
+                .collect(Collectors.toList());
+
+    }
+
     public List<Reservation> getReservationsOfACustomer(String email) {
 
         // find reservation which matches the same email, and return a new list
