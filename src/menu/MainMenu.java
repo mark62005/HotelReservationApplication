@@ -5,8 +5,6 @@ import api.HotelResource;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
-import service.CustomerService;
-import service.ReservationService;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -82,7 +80,7 @@ public class MainMenu {
 
     }
 
-    // for option 1
+    // for option 1: Find and reserve a room
     public static void enterCheckInDate() {
 
         try {
@@ -166,7 +164,7 @@ public class MainMenu {
 
     }
 
-    // for option 2
+    // for option 2: See my reservations
     public static void seeMyReservations() {
 
         // ask user to enter their email
@@ -185,6 +183,25 @@ public class MainMenu {
             }
 
         }
+
+    }
+
+    // handle option 3: Create an account
+    public static void createAnAccount() {
+
+        // ask user to enter their first name
+        System.out.println("Please enter your first name: ");
+        String firstNameInput = scanner.nextLine().trim();
+
+        // ask user to enter their last name
+        System.out.println("Please enter your last name: ");
+        String lastNameInput = scanner.nextLine().trim();
+
+        // ask user to enter their email
+        String emailInput = handleEmailInput();
+
+        hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
+        System.out.println("Account created successfully.");
 
     }
 
