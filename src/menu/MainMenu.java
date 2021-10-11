@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class MainMenu {
 
@@ -45,6 +46,39 @@ public class MainMenu {
                 """;
 
         System.out.println(mainMenu);
+
+    }
+
+    // check if the format of email input is valid
+    public static boolean isEmailFormatValid(String email) {
+
+        String emailRegex = "^(.+)@(.+)\\.com$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // check if email format matches "domain@email.com"
+        return pattern.matcher(email).matches();
+
+    }
+
+    public static String handleEmailInput() {
+
+        // ask user to enter their email
+        System.out.println("Please enter your email: ");
+        String emailInput = scanner.nextLine();
+
+        // make sure the email format is valid
+        while (!isEmailFormatValid(emailInput)) {
+            System.out.println("Invalid format. Valid format for email: 'domain@email.com', please try again.");
+            emailInput = scanner.nextLine();
+        }
+
+        // make sure the email exists in the customer map
+        while (!adminResource.getAllCustomers().containsKey(emailInput)) {
+            System.out.println("This email doesn't exist, please try another one.");
+            emailInput = scanner.nextLine();
+        }
+
+        return emailInput;
 
     }
 
@@ -115,14 +149,7 @@ public class MainMenu {
             }
 
             // ask user to enter their email
-            System.out.println("Please enter your email: ");
-            String emailInput = scanner.nextLine();
-
-            // make sure the email exists in the customer map
-            while (!adminResource.getAllCustomers().containsKey(emailInput)) {
-                System.out.println("This email doesn't exist, please try another one.");
-                emailInput = scanner.nextLine();
-            }
+            String emailInput = handleEmailInput();
 
             Customer customer = hotelResource.getCustomer(emailInput);
 
@@ -142,14 +169,8 @@ public class MainMenu {
     // for option 2
     public static void seeMyReservations() {
 
-        System.out.println("Please enter your email: ");
-        String emailInput = scanner.nextLine();
-
-        // make sure the email exists in the customer map
-        while (!adminResource.getAllCustomers().containsKey(emailInput)) {
-            System.out.println("This email doesn't exist, please try another one.");
-            emailInput = scanner.nextLine();
-        }
+        // ask user to enter their email
+        String emailInput = handleEmailInput();
 
         List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
 
@@ -160,7 +181,7 @@ public class MainMenu {
             // print out the reservation list of that customer
             System.out.println("Your reservations: ");
             for (int i = 0; i < myReservations.size(); i++) {
-                System.out.println(i + ". " + myReservations.indexOf(i));
+                System.out.println(i + ". " + myReservations.get(i));
             }
 
         }
