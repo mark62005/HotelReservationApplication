@@ -184,4 +184,7 @@ public class AdminMenu {
 
     }
 
+    // handle option 5: Add test data
+    pu
+
 }

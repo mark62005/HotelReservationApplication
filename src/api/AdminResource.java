@@ -12,8 +12,8 @@ import java.util.Map;
 public class AdminResource {
 
     private static AdminResource instance;
-    private CustomerService customerService;
-    private ReservationService reservationService;
+    private final CustomerService customerService = CustomerService.getInstance();
+    private final ReservationService reservationService = ReservationService.getInstance();
 
     // provide static reference
     private AdminResource(){}
@@ -23,10 +23,6 @@ public class AdminResource {
             instance = new AdminResource();
         }
         return instance;
-    }
-
-    public Customer getCustomer(String email) {
-        return customerService.getCustomer(email);
     }
 
     public void addRoom(IRoom room) {
