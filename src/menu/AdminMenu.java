@@ -173,21 +173,42 @@ public class AdminMenu {
     // handle option 3: See all Reservations
     public static void seeAllReservations() {
 
-        try {
+        boolean keepRunning = true;
 
-            List<Reservation> reservations = adminResource.getAllReservations();
-            int i = 1;
+        while (keepRunning) {
+            try {
 
-            // print the reservation list
-            System.out.println("Reservation List: ");
-            for (Reservation reservation : reservations) {
-                System.out.printf("\n%d\\. %s", i, reservation);
-                i++;
+                List<Reservation> reservations = adminResource.getAllReservations();
+                int i = 1;
+
+                if (reservations.isEmpty()) {
+                    System.out.println("Sorry, the reservation list is empty.");
+                    keepRunning = false;
+                } else {
+
+                    // print the reservation list
+                    System.out.println("Reservation List: ");
+                    for (Reservation reservation : reservations) {
+                        System.out.printf("\n%d\\. %s", i, reservation);
+                        i++;
+                    }
+
+                }
+
+                System.out.println("Back to Admin Menu? (y/n)");
+                String confirmOption = handleConfirmOptions();
+
+                if (confirmOption.equals("y")) {
+                    keepRunning = false;
+                } else if (confirmOption.equals("n")) {
+                    seeAllReservations();
+                }
+
+            } catch (NullPointerException e) {
+                System.out.println("Sorry, the reservation list is empty.");
             }
-
-        } catch (NullPointerException e) {
-            System.out.println("Sorry, the reservation list is empty.");
         }
+        printAdminMenu();
 
     }
 
