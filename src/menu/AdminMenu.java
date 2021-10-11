@@ -75,21 +75,49 @@ public class AdminMenu {
     // handle option 1: See all Customers
     public static void seeAllCustomers() {
 
-        try {
+        boolean keepRunning = true;
 
-            Map<String, Customer> customers = adminResource.getAllCustomers();
-            int i = 1;
+        while (keepRunning) {
+            try {
 
-            // print the customer list
-            System.out.println("Customer List: ");
-            for (Customer customer : customers.values()) {
-                System.out.printf("\n%d\\. %s", i, customer);
-                i++;
+                Map<String, Customer> customers = adminResource.getAllCustomers();
+                int i = 1;
+
+                if (customers.isEmpty()) {
+                    System.out.println("\nSorry, the customer list is empty.");
+                    keepRunning = false;
+                } else {
+
+                    // print the customer list
+                    System.out.println("Customer List: ");
+                    for (Customer customer : customers.values()) {
+                        System.out.printf("\n%d. %s", i, customer);
+                        i++;
+                    }
+
+                }
+
+                System.out.println("Back to Admin Menu? (y/n)");
+                String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
+
+                List<String> conditions = Arrays.asList("y", "n");
+
+                while (!conditions.contains(userInput)) {
+                    System.out.println("Invalid input. Please enter (y/n): ");
+                    userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
+                }
+
+                if (userInput.equals("y")) {
+                    keepRunning = false;
+                } else if (userInput.equals("n")) {
+                    seeAllCustomers();
+                }
+
+            } catch (NullPointerException e) {
+                System.out.println("Sorry, the customer list is empty.");
             }
-
-        } catch (NullPointerException e) {
-            System.out.println("Sorry, the customer list is empty.");
         }
+        printAdminMenu();
 
     }
 
