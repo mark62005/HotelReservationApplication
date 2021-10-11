@@ -72,6 +72,20 @@ public class AdminMenu {
         System.out.println(adminMenu);
     }
 
+    // handle (y/n) options
+    public static String handleConfirmOptions() {
+
+        List<String> confirmConditions = Arrays.asList("y", "n");
+        String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
+
+        while (!confirmConditions.contains(userInput)) {
+            System.out.println("Invalid input. Please enter (y/n): ");
+            userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
+        }
+        return userInput;
+
+    }
+
     // handle option 1: See all Customers
     public static void seeAllCustomers() {
 
@@ -98,18 +112,11 @@ public class AdminMenu {
                 }
 
                 System.out.println("Back to Admin Menu? (y/n)");
-                String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
+                String confirmOption = handleConfirmOptions();
 
-                List<String> conditions = Arrays.asList("y", "n");
-
-                while (!conditions.contains(userInput)) {
-                    System.out.println("Invalid input. Please enter (y/n): ");
-                    userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
-                }
-
-                if (userInput.equals("y")) {
+                if (confirmOption.equals("y")) {
                     keepRunning = false;
-                } else if (userInput.equals("n")) {
+                } else if (confirmOption.equals("n")) {
                     seeAllCustomers();
                 }
 
