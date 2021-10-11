@@ -90,12 +90,9 @@ public class AdminMenu {
     // handle option 2: See all Rooms
     public static void seeAllRooms() {
 
-        Map<String, IRoom> rooms = adminResource.getAllRooms();
+        try {
 
-        if (rooms.isEmpty()) {
-            System.out.println("Sorry, the room list is empty.");
-        } else {
-
+            Map<String, IRoom> rooms = adminResource.getAllRooms();
             int i = 1;
 
             // print the room list
@@ -105,6 +102,8 @@ public class AdminMenu {
                 i++;
             }
 
+        } catch (NullPointerException e) {
+            System.out.println("Sorry, the room list is empty.");
         }
 
     }
