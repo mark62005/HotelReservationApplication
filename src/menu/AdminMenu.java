@@ -17,36 +17,12 @@ public class AdminMenu {
 
     public static void main(String[] args) {
 
+        boolean keepRunning = true;
+
         // display initial admin menu
         printAdminMenu();
 
-        handleAdminOptions();
-
-    }
-
-    public static void printAdminMenu() {
-        String adminMenu = """
-                
-                Admin Menu
-                1. See all Customers
-                2. See all Rooms
-                3. See all Reservations
-                4. Add a Room
-                5. Add test data
-                6. Clear test data
-                7. Back to Main Menu
-                
-                Please enter your option (1 - 5):\040""";
-
-        System.out.println(adminMenu);
-    }
-
-    public static void handleAdminOptions() {
-
-        boolean keepRunning = true;
-
         while (keepRunning) {
-
             try {
 
                 // ask user to enter their option
@@ -72,12 +48,28 @@ public class AdminMenu {
                 }
 
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter your option again (1 - 5): ");
-                handleAdminOptions();
+                System.out.println("Invalid input. Please enter a number from 1 to 7.");
+                AdminMenu.main(null);
             }
-
         }
 
+    }
+
+    public static void printAdminMenu() {
+        String adminMenu = """
+                
+                Admin Menu
+                1. See all Customers
+                2. See all Rooms
+                3. See all Reservations
+                4. Add a Room
+                5. Add test data
+                6. Clear test data
+                7. Back to Main Menu
+                
+                Please enter your option (1 - 7):\040""";
+
+        System.out.println(adminMenu);
     }
 
     // handle option 1: See all Customers
