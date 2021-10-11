@@ -6,6 +6,7 @@ import model.Reservation;
 import model.Room;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReservationService {
 
@@ -39,6 +40,15 @@ public class ReservationService {
         reservations.add(reservation);
         // return reservation to display it for customer
         return reservation;
+
+    }
+
+    public List<Reservation> getReservationsOfACustomer(String email) {
+
+        // find reservation which matches the same email, and return a new list
+        return reservations.stream()
+                .filter((r) -> r.getCustomer().getEmail().equals(email.toLowerCase(Locale.ROOT)))
+                .collect(Collectors.toList());
 
     }
 
