@@ -283,6 +283,7 @@ public class AdminMenu {
         addRoomSamples();
         addReservationSamples();
 
+        System.out.println("Sample data added successfully.");
         printAdminMenu();
 
     }
