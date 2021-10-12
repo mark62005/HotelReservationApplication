@@ -3,7 +3,6 @@ package service;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
-import model.Room;
 
 import java.util.*;
 import java.util.stream.Collectors;

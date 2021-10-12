@@ -274,20 +274,20 @@ public class AdminMenu {
     // add customer sample data
     public static void addCustomerSamples() {
 
-        hotelResource.addCustomer("John", "Doe","john@gmail.com");
-        hotelResource.addCustomer("Max", "Musterman","Muster@web.com");
-        hotelResource.addCustomer("Frieda", "Meyer","F.Meyer@gmx.com");
-        hotelResource.addCustomer("Carla", "Schmidt","CarlaSchmidt@webmail.com");
+        hotelResource.addCustomer("John", "Doe","test.john@email.com");
+        hotelResource.addCustomer("Reginald", "Medina","test.Reginald.Medina@webmail.com");
+        hotelResource.addCustomer("Glen", "Lane","test.glen.lane@example.com");
+        hotelResource.addCustomer("Brad", "Gibson","test.brad.gibson@domain.com");
 
     }
 
     // add room sample data
     public static void addRoomSamples() {
 
-        IRoom room1 = new Room("104", 50.0, RoomType.SINGLE);
-        IRoom room2 = new Room("102", 70.0, RoomType.DOUBLE);
-        IRoom room3 = new Room("103", 90.0, RoomType.SINGLE);
-        IRoom room4 = new Room("101", 110.0, RoomType.DOUBLE);
+        IRoom room1 = new Room("104_test", 50.0, RoomType.SINGLE);
+        IRoom room2 = new Room("102_test", 70.0, RoomType.DOUBLE);
+        IRoom room3 = new Room("103_test", 90.0, RoomType.SINGLE);
+        IRoom room4 = new Room("101_test", 110.0, RoomType.DOUBLE);
 
         adminResource.addRoom(room1);
         adminResource.addRoom(room2);
@@ -299,15 +299,15 @@ public class AdminMenu {
     // add reservation sample data
     public static void addReservationSamples() {
 
-        Customer john = hotelResource.getCustomer("john@gmail.com");
-        Customer max = hotelResource.getCustomer("Muster@web.com");
-        Customer frieda = hotelResource.getCustomer("F.Meyer@gmx.com");
-        Customer carla = hotelResource.getCustomer("CarlaSchmidt@webmail.com");
+        Customer john = hotelResource.getCustomer("test.john@email.com");
+        Customer max = hotelResource.getCustomer("test.Reginald.Medina@webmail.com");
+        Customer frieda = hotelResource.getCustomer("test.glen.lane@example.com");
+        Customer carla = hotelResource.getCustomer("test.brad.gibson@domain.com");
 
-        IRoom room1 = hotelResource.getRoom("104");
-        IRoom room2 = hotelResource.getRoom("102");
-        IRoom room3 = hotelResource.getRoom("103");
-        IRoom room4 = hotelResource.getRoom("101");
+        IRoom room1 = hotelResource.getRoom("104_test");
+        IRoom room2 = hotelResource.getRoom("102_test");
+        IRoom room3 = hotelResource.getRoom("103_test");
+        IRoom room4 = hotelResource.getRoom("101_test");
 
         Date checkInDate1 = null;
         Date checkOutDate1 = null;
@@ -322,17 +322,17 @@ public class AdminMenu {
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-            checkInDate1 = dateFormat.parse("23/12/2020");
-            checkOutDate1 = dateFormat.parse("31/12/2020");
+            checkInDate1 = dateFormat.parse("23/12/2021");
+            checkOutDate1 = dateFormat.parse("31/12/2021");
 
-            checkInDate2 = dateFormat.parse("04/01/2021");
-            checkOutDate2 = dateFormat.parse("12/01/2021");
+            checkInDate2 = dateFormat.parse("04/01/2022");
+            checkOutDate2 = dateFormat.parse("12/01/2022");
 
-            checkInDate3 = dateFormat.parse("26/12/2020");
-            checkOutDate3 = dateFormat.parse("27/12/2020");
+            checkInDate3 = dateFormat.parse("26/12/2022");
+            checkOutDate3 = dateFormat.parse("27/12/2022");
 
-            checkInDate4 = dateFormat.parse("12/12/2020");
-            checkOutDate4 = dateFormat.parse("19/01/2021");
+            checkInDate4 = dateFormat.parse("12/12/2021");
+            checkOutDate4 = dateFormat.parse("19/01/2022");
 
         }  catch (ParseException e) {
             e.printStackTrace();
