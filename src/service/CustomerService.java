@@ -3,7 +3,9 @@ package service;
 import model.Customer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class CustomerService {
 
@@ -12,7 +14,7 @@ public class CustomerService {
     // Provide static reference for CustomerService
     private static CustomerService instance;
 
-    private CustomerService(){};
+    private CustomerService(){}
 
     public static CustomerService getInstance() {
         if (instance == null) {
@@ -41,6 +43,24 @@ public class CustomerService {
 
     public Map<String, Customer> getAllCustomers() {
         return customers;
+    }
+
+    public void removeCustomer(String email) {
+        customers.remove(email);
+    }
+
+    public void clearCustomerSamples() {
+
+        // find the list of emails that contain "test."
+        List<String> emails = customers.values().stream()
+                .map(Customer::getEmail)
+                .filter(email -> email.contains("test."))
+                .collect(Collectors.toList());
+        // remove them from the customer list
+        for (String email : emails) {
+            removeCustomer(email);
+        }
+
     }
 
 }

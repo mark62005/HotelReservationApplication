@@ -45,4 +45,24 @@ public class AdminResource {
         reservationService.cancelReservation(id);
     }
 
+    public void removeCustomer(String email) {
+        customerService.removeCustomer(email);
+    }
+
+    public void removeRoom(String roomNumber) {
+        reservationService.removeRoom(roomNumber);
+    }
+
+    public void clearCustomerSamples() {
+        customerService.clearCustomerSamples();
+    }
+
+    public void clearRoomSamples() {
+        reservationService.ClearRoomSamples();
+    }
+
+    public void clearReservationSamples() {
+        reservationService.clearReservationSamples();
+    }
+
 }

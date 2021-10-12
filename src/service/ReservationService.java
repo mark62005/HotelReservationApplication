@@ -116,4 +116,37 @@ public class ReservationService {
         reservations.remove(id);
     }
 
+    public void clearReservationSamples() {
+
+        // find the list of reservation ids that contain "test."
+        List<Long> ids = reservations.values().stream()
+                .filter(r -> r.getCustomer().getEmail().contains("test."))
+                .map(Reservation::getId)
+                .collect(Collectors.toList());
+        // remove them from the reservation list
+        for (long id : ids) {
+            cancelReservation(id);
+        }
+
+    }
+
+
+    public void removeRoom(String roomNumber) {
+        rooms.remove(roomNumber);
+    }
+
+    public void ClearRoomSamples() {
+
+        // find the list of room numbers that contain "_test"
+        List<String> roomNumbers = rooms.values().stream()
+                .map(IRoom::getRoomNumber)
+                .filter(number -> number.contains("_test"))
+                .collect(Collectors.toList());
+        // remove them from the room list
+        for (String roomNumber : roomNumbers) {
+            removeRoom(roomNumber);
+        }
+
+    }
+
 }

@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class AdminMenu {
 
@@ -350,23 +349,30 @@ public class AdminMenu {
     // handle option 6: Clear test data
     public static void clearTestData() {
 
+        clearCustomerSamples();
+        clearRoomSamples();
+        clearReservationSamples();
+
+        printAdminMenu();
+
+    }
+
+    // clear the customer sample data
+    public static void clearCustomerSamples() {
+        adminResource.clearCustomerSamples();
+        System.out.println("Customer sample data cleared successfully.");
+    }
+
+    // clear the customer sample data
+    public static void clearRoomSamples() {
+        adminResource.clearRoomSamples();
+        System.out.println("Room sample data cleared successfully.");
     }
 
     // clear the reservation sample data
     public static void clearReservationSamples() {
-
-        List<Long> data = adminResource.getAllReservations().values().stream()
-                .filter(r -> r.getCustomer().getEmail().contains("test."))
-                .map(Reservation::getId)
-                .collect(Collectors.toList());
-        for (long id : data
-        ) {
-            adminResource.cancelReservation(id);
-        }
-
-        System.out.println("Test data cleared successfully.");
-        printAdminMenu();
-
+        adminResource.clearReservationSamples();
+        System.out.println("Reservation sample data cleared successfully.");
     }
 
 }
