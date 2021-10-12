@@ -284,10 +284,10 @@ public class AdminMenu {
     // add room sample data
     public static void addRoomSamples() {
 
-        IRoom room1 = new Room("100", 50.0, RoomType.SINGLE);
-        IRoom room2 = new Room("101", 70.0, RoomType.DOUBLE);
-        IRoom room3 = new Room("102", 90.0, RoomType.SINGLE);
-        IRoom room4 = new Room("103", 110.0, RoomType.DOUBLE);
+        IRoom room1 = new Room("104", 50.0, RoomType.SINGLE);
+        IRoom room2 = new Room("102", 70.0, RoomType.DOUBLE);
+        IRoom room3 = new Room("103", 90.0, RoomType.SINGLE);
+        IRoom room4 = new Room("101", 110.0, RoomType.DOUBLE);
 
         adminResource.addRoom(room1);
         adminResource.addRoom(room2);
@@ -304,10 +304,10 @@ public class AdminMenu {
         Customer frieda = hotelResource.getCustomer("F.Meyer@gmx.com");
         Customer carla = hotelResource.getCustomer("CarlaSchmidt@webmail.com");
 
-        IRoom room1 = hotelResource.getRoom("100");
-        IRoom room2 = hotelResource.getRoom("101");
-        IRoom room3 = hotelResource.getRoom("102");
-        IRoom room4 = hotelResource.getRoom("103");
+        IRoom room1 = hotelResource.getRoom("104");
+        IRoom room2 = hotelResource.getRoom("102");
+        IRoom room3 = hotelResource.getRoom("103");
+        IRoom room4 = hotelResource.getRoom("101");
 
         Date checkInDate1 = null;
         Date checkOutDate1 = null;
