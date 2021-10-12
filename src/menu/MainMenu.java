@@ -202,21 +202,72 @@ public class MainMenu {
     // for option 2: See my reservations
     public static void seeMyReservations() {
 
-        try {
+        while (true) {
+            try {
 
-            // ask user to enter their email
-            String emailInput = handleEmailInput("see my reservations");
+                System.out.println("Have you created an account yet? (y/n)");
+                // if user enter "n", ask if they want to create an account
+                if (AdminMenu.isDenied()) {
 
-            List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
+                    System.out.println("Would you like to create an account first? (y/n)");
+                    // if user enter "n", back to main menu and break the loop
+                    if (AdminMenu.isDenied()) {
+                        MainMenu.main(null);
+                        break;
+                    }
+                    // if user enter "y", go to create an account
+                    createAnAccount();
 
-            // print out the reservation list of that customer
-            System.out.println("Your reservations: ");
-            for (int i = 0; i < myReservations.size(); i++) {
-                System.out.printf("\n%d\\. %s", i + 1, myReservations.get(i));
+                }
+
+                // if user enter "y", ask user to enter their email
+                String emailInput = handleEmailInput("see my reservations");
+
+                List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
+
+                if (myReservations.isEmpty()) {
+                    System.out.println("You haven't made any reservation yet.");
+                } else {
+
+                    int i = 1;
+                    // print out the reservation list of that customer
+                    System.out.print("\nYour reservations: ");
+                    for (Reservation reservation : myReservations) {
+                        System.out.printf("\n%d. %s", i, reservation);
+                        i++;
+
+                        if (i == myReservations.size() + 1) {
+                            System.out.println();
+                        }
+                    }
+                    System.out.println();
+
+                }
+
+                System.out.println("Back to Main Menu? (y/n)");
+                // if user enter "n", call this function again
+                if (AdminMenu.isDenied()) {
+                    seeMyReservations();
+                } else {
+                    // if user enter "y", return to main menu and break the loop
+                    MainMenu.main(null);
+                    break;
+                }
+
+            } catch (NullPointerException e) {
+
+                System.out.println("You haven't made any reservation yet.");
+                System.out.println("Back to Main Menu? (y/n)");
+                // if user enter "n", call this function again
+                if (AdminMenu.isDenied()) {
+                    seeMyReservations();
+                } else {
+                    // if user enter "y", return to main menu and break the loop
+                    MainMenu.main(null);
+                    break;
+                }
+
             }
-
-        } catch (NullPointerException e) {
-            System.out.println("You haven't made any reservation yet.");
         }
 
     }

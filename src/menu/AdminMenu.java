@@ -176,12 +176,12 @@ public class AdminMenu {
         try {
 
             List<Reservation> reservations = adminResource.getAllReservations();
-            int i = 1;
 
             if (reservations.isEmpty()) {
                 System.out.println("Sorry, the reservation list is empty.");
             } else {
 
+                int i = 1;
                 // print the reservation list
                 System.out.print("\nReservation List: ");
                 for (Reservation reservation : reservations) {
