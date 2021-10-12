@@ -73,16 +73,19 @@ public class AdminMenu {
     }
 
     // handle (y/n) options
-    public static String handleConfirmOptions() {
+    public static boolean isDenied() {
 
-        List<String> confirmConditions = Arrays.asList("y", "n");
+//        List<String> confirmConditions = Arrays.asList("y", "n");
         String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
 
-        while (!confirmConditions.contains(userInput)) {
+        while (!userInput.equals("y") && !userInput.equals("n")) {
             System.out.println("Invalid input. Please enter (y/n): ");
             userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
         }
-        return userInput;
+
+        // if user enter "n", return true
+        // if user enter "y", return false
+        return userInput.equals("n");
 
     }
 
@@ -113,13 +116,12 @@ public class AdminMenu {
             }
 
             System.out.println("Back to Admin Menu? (y/n)");
-            String confirmOption = handleConfirmOptions();
-
-            if (confirmOption.equals("y")) {
-                printAdminMenu();
-            } else if (confirmOption.equals("n")) {
+            // if user enter "n", print the customer list again
+            if (isDenied()) {
                 seeAllCustomers();
             }
+            // if user enter "y", return to admin menu
+            printAdminMenu();
 
         } catch (NullPointerException e) {
             System.out.println("Sorry, the customer list is empty.");
@@ -131,94 +133,80 @@ public class AdminMenu {
     // handle option 2: See all Rooms
     public static void seeAllRooms() {
 
-        boolean keepRunning = true;
+        try {
 
-        while (keepRunning) {
-            try {
+            Map<String, IRoom> rooms = adminResource.getAllRooms();
+            int i = 1;
 
-                Map<String, IRoom> rooms = adminResource.getAllRooms();
-                int i = 1;
-
-                if (rooms.isEmpty()) {
-                    System.out.println("Sorry, the room list is empty.");
-                    keepRunning = false;
-                } else {
-
-                    // print the room list
-                    System.out.print("\nRoom List: ");
-                    for (IRoom room : rooms.values()) {
-                        System.out.printf("\n%d. %s", i, room);
-                        i++;
-
-                        if (i == rooms.size() + 1) {
-                            System.out.println();
-                        }
-                    }
-                    System.out.println();
-
-                }
-
-                System.out.println("Back to Admin Menu? (y/n)");
-                String confirmOption = handleConfirmOptions();
-
-                if (confirmOption.equals("y")) {
-                    keepRunning = false;
-                } else if (confirmOption.equals("n")) {
-                    seeAllRooms();
-                }
-
-            } catch (NullPointerException e) {
+            if (rooms.isEmpty()) {
                 System.out.println("Sorry, the room list is empty.");
+            } else {
+
+                // print the room list
+                System.out.print("\nRoom List: ");
+                for (IRoom room : rooms.values()) {
+                    System.out.printf("\n%d. %s", i, room);
+                    i++;
+
+                    if (i == rooms.size() + 1) {
+                        System.out.println();
+                    }
+                }
+                System.out.println();
+
             }
+
+            System.out.println("Back to Admin Menu? (y/n)");
+            // if user enter "n", print the room list again
+            if (isDenied()) {
+                seeAllRooms();
+            }
+            // if user enter "y", return to admin menu
+            printAdminMenu();
+
+        } catch (NullPointerException e) {
+            System.out.println("Sorry, the room list is empty.");
         }
-        printAdminMenu();
 
     }
 
     // handle option 3: See all Reservations
     public static void seeAllReservations() {
 
-        boolean keepRunning = true;
+        try {
 
-        while (keepRunning) {
-            try {
+            List<Reservation> reservations = adminResource.getAllReservations();
+            int i = 1;
 
-                List<Reservation> reservations = adminResource.getAllReservations();
-                int i = 1;
-
-                if (reservations.isEmpty()) {
-                    System.out.println("Sorry, the reservation list is empty.");
-                    keepRunning = false;
-                } else {
-
-                    // print the reservation list
-                    System.out.print("\nReservation List: ");
-                    for (Reservation reservation : reservations) {
-                        System.out.printf("\n%d. %s", i, reservation);
-                        i++;
-
-                        if (i == reservations.size() + 1) {
-                            System.out.println();
-                        }
-                    }
-                    System.out.println();
-
-                }
-
-                System.out.println("Back to Admin Menu? (y/n)");
-                String confirmOption = handleConfirmOptions();
-
-                if (confirmOption.equals("y")) {
-                    keepRunning = false;
-                } else if (confirmOption.equals("n")) {
-                    seeAllReservations();
-                }
-
-            } catch (NullPointerException e) {
+            if (reservations.isEmpty()) {
                 System.out.println("Sorry, the reservation list is empty.");
+            } else {
+
+                // print the reservation list
+                System.out.print("\nReservation List: ");
+                for (Reservation reservation : reservations) {
+                    System.out.printf("\n%d. %s", i, reservation);
+                    i++;
+
+                    if (i == reservations.size() + 1) {
+                        System.out.println();
+                    }
+                }
+                System.out.println();
+
             }
+
+            System.out.println("Back to Admin Menu? (y/n)");
+            // if user enter "n", print the reservation list again
+            if (isDenied()) {
+                seeAllReservations();
+            }
+            // if user enter "y", return to admin menu
+            printAdminMenu();
+
+        } catch (NullPointerException e) {
+            System.out.println("Sorry, the reservation list is empty.");
         }
-        printAdminMenu();
 
     }
 

@@ -238,15 +238,11 @@ public class MainMenu {
         System.out.printf("\nFirst name: %s, Last name: %s, Email: %s", firstNameInput, lastNameInput, emailInput);
         System.out.println("\nConfirm? (y/n)");
 
-        String confirmOption = AdminMenu.handleConfirmOptions();
-        if (confirmOption.equals("y")) {
-
-            hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
-            System.out.println("Account created successfully.");
-
-        } else if (confirmOption.equals("n")) {
+        if (AdminMenu.isDenied()) {
             createAnAccount();
         }
+        hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
+        System.out.println("Account created successfully.");
 
     }
 
