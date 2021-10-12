@@ -11,7 +11,7 @@ public class ReservationService {
 
     private static ReservationService instance;
     private final Map<String, IRoom> rooms = new HashMap<>();
-    private final List<Reservation> reservations = new ArrayList<>();
+    private final Map<Long, Reservation> reservations = new HashMap<>();
 
     // provide a static reference for Singleton Pattern
     private ReservationService(){}
@@ -47,7 +47,7 @@ public class ReservationService {
 
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
 
-        reservations.add(reservation);
+        reservations.put(reservation.getId(), reservation);
         // return reservation to display it for customer
         return reservation;
 
@@ -60,7 +60,7 @@ public class ReservationService {
             throw new NullPointerException("Sorry, there is no rooms created in our database");
         }
 
-        return reservations.stream()
+        return reservations.values().stream()
                 // filter reservations which the check-in date input is after the check-out date of that reservation
                 //  and the check-out date input is before the check-in date of that reservation
                 .filter(r -> r.getCheckInDate().after(checkOutDate) || r.getCheckOutDate().before(checkInDate))
@@ -101,14 +101,18 @@ public class ReservationService {
     public List<Reservation> getReservationsOfACustomer(String email) {
 
         // find reservation which matches the same email, and return a new list
-        return reservations.stream()
+        return reservations.values().stream()
                 .filter((r) -> r.getCustomer().getEmail().equals(email.toLowerCase(Locale.ROOT)))
                 .collect(Collectors.toList());
 
     }
 
     public List<Reservation> getAllReservations() {
-        return reservations;
+        return (List<Reservation>) reservations.values();
+    }
+
+    public void cancelReservation(long id) {
+        reservations.remove(id);
     }
 
 }

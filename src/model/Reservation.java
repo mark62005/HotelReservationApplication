@@ -1,9 +1,11 @@
 package model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Reservation {
 
+    private final long id;
     private Customer customer;
     private IRoom room;
     private Date checkInDate;
@@ -15,11 +17,19 @@ public class Reservation {
         if (checkInDate.after(checkOutDate) || checkInDate.equals(checkOutDate)) {
             throw new IllegalArgumentException("Invalid input! Check-out date must be after check-in date");
         }
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        this.id = timestamp.getTime();
+
         this.customer = customer;
         this.room = room;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
 
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Customer getCustomer() {
