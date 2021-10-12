@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -246,7 +247,7 @@ public class MainMenu {
                 // if user enter "y", ask user to enter their email
                 String emailInput = handleEmailInput("see my reservations");
 
-                List<Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
+                Map<Long, Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
 
                 if (myReservations.isEmpty()) {
                     System.out.println("You haven't made any reservation yet.");
@@ -255,7 +256,7 @@ public class MainMenu {
                     int i = 1;
                     // print out the reservation list of that customer
                     System.out.print("\nYour reservations: ");
-                    for (Reservation reservation : myReservations) {
+                    for (Reservation reservation : myReservations.values()) {
                         System.out.printf("\n%d. %s", i, reservation);
                         i++;
 

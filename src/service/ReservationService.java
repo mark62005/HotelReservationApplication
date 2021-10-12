@@ -5,6 +5,7 @@ import model.IRoom;
 import model.Reservation;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ReservationService {
@@ -98,12 +99,12 @@ public class ReservationService {
 
     }
 
-    public List<Reservation> getReservationsOfACustomer(String email) {
+    public Map<Long, Reservation> getReservationsOfACustomer(String email) {
 
         // find reservation which matches the same email, and return a new list
         return reservations.values().stream()
                 .filter((r) -> r.getCustomer().getEmail().equals(email.toLowerCase(Locale.ROOT)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(Reservation::getId, Function.identity()));
 
     }
 

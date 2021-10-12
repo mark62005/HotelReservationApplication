@@ -8,6 +8,7 @@ import service.ReservationService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class HotelResource {
 
@@ -49,7 +50,7 @@ public class HotelResource {
         reservationService.recommendAlternatives(checkInDate, checkOutDate);
     }
 
-    public List<Reservation> getReservationsOfACustomer(String email) {
+    public Map<Long, Reservation> getReservationsOfACustomer(String email) {
         return reservationService.getReservationsOfACustomer(email);
     }
 
