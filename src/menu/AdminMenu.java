@@ -76,7 +76,6 @@ public class AdminMenu {
     // handle (y/n) options
     public static boolean isDenied() {
 
-//        List<String> confirmConditions = Arrays.asList("y", "n");
         String userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
 
         while (!userInput.equals("y") && !userInput.equals("n")) {
@@ -84,8 +83,8 @@ public class AdminMenu {
             userInput = scanner.nextLine().toLowerCase(Locale.ROOT);
         }
 
-        // if user enter "n", return true
-        // if user enter "y", return false
+        // if user enters "n", return true
+        // if user enters "y", return false
         return userInput.equals("n");
 
     }
@@ -117,11 +116,11 @@ public class AdminMenu {
             }
 
             System.out.println("Back to Admin Menu? (y/n)");
-            // if user enter "n", print the customer list again
+            // if user enters "n", print the customer list again
             if (isDenied()) {
                 seeAllCustomers();
             }
-            // if user enter "y", return to admin menu
+            // if user enters "y", return to admin menu
             printAdminMenu();
 
         } catch (NullPointerException e) {
@@ -158,11 +157,11 @@ public class AdminMenu {
             }
 
             System.out.println("Back to Admin Menu? (y/n)");
-            // if user enter "n", print the room list again
+            // if user enters "n", print the room list again
             if (isDenied()) {
                 seeAllRooms();
             }
-            // if user enter "y", return to admin menu
+            // if user enters "y", return to admin menu
             printAdminMenu();
 
         } catch (NullPointerException e) {
@@ -198,11 +197,11 @@ public class AdminMenu {
             }
 
             System.out.println("Back to Admin Menu? (y/n)");
-            // if user enter "n", print the reservation list again
+            // if user enters "n", print the reservation list again
             if (isDenied()) {
                 seeAllReservations();
             }
-            // if user enter "y", return to admin menu
+            // if user enters "y", return to admin menu
             printAdminMenu();
 
         } catch (NullPointerException e) {

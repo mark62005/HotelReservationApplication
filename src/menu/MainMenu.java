@@ -9,10 +9,7 @@ import model.Reservation;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class MainMenu {
@@ -43,7 +40,7 @@ public class MainMenu {
                 }
 
                 switch (option) {
-                    case 1 -> enterCheckInDate();
+                    case 1 -> findAndReserveARoom();
                     case 2 -> seeMyReservations();
                     case 3 -> createAnAccount();
                     case 4 -> {
@@ -119,52 +116,35 @@ public class MainMenu {
     }
 
     // for option 1: Find and reserve a room
-    public static void enterCheckInDate() {
+    public static void findAndReserveARoom() {
 
         try {
 
             // ask user to choose a check-in date
             System.out.println("Please enter a check-in date (dd/mm/yyyy): ");
-            Date checkInDateInput = dateFormat.parse(scanner.nextLine());
-            System.out.println(checkInDateInput);
-
-            findAndReserveARoom(checkInDateInput);
-
-        // if the format of date input is invalid, start the function again
-        } catch (ParseException e) {
-            System.out.println("Invalid format for date. Please use the format (dd/mm/yyyy).");
-            enterCheckInDate();
-        }
-
-    }
-
-    public static void findAndReserveARoom(Date checkInDateInput) {
-
-        try {
+            Date checkInDateInput = handleDateInput();
 
             // ask user to choose a check-out date
             System.out.println("Please enter a check-out date (dd/mm/yyyy): ");
-            Date checkOutDateInput = dateFormat.parse(scanner.nextLine());
-            System.out.println(checkOutDateInput);
+            Date checkOutDateInput = handleDateInput();
 
             // to make sure check-out date is after check-in date
-            while (checkInDateInput.after(checkOutDateInput) || checkInDateInput.equals(checkOutDateInput)) {
+            while (Objects.requireNonNull(checkInDateInput).after(checkOutDateInput) || checkInDateInput.equals(checkOutDateInput)) {
 
                 System.out.println("Invalid input! Check-out date must be after check-in date");
                 System.out.println("Please enter a check-out date: (dd/mm/yyyy)");
-                checkOutDateInput = dateFormat.parse(scanner.nextLine());
-                System.out.println(checkOutDateInput);
+                checkOutDateInput = handleDateInput();
 
             }
 
             System.out.printf("\nCheck-in date: %s, check-out date: %s", dateFormat.format(checkInDateInput), dateFormat.format(checkOutDateInput));
             System.out.println("\nConfirm this date range? (y/n)");
-            // if user enter "n", ask them to enter the data range again
+            // if user enters "n", ask them to enter the data range again
             if (AdminMenu.isDenied()) {
-                enterCheckInDate();
+                findAndReserveARoom();
             }
 
-            // if user enter "y"
+            // if user enters "y"
             // get a list of available rooms for that date range
             List<IRoom> availableRooms = hotelResource.findAvailableRooms(checkInDateInput, checkOutDateInput);
 
@@ -202,23 +182,21 @@ public class MainMenu {
             System.out.printf("\nCheck-in date: %s, Check-out date: %s, Room number: %s, Email: %s",
                     dateFormat.format(checkInDateInput), dateFormat.format(checkOutDateInput), roomNumberInput, emailInput);
             System.out.println("\nConfirm the above information? (y/n)");
-            // if user enter "n", ask them to enter the information again
+            // if user enters "n", ask them to enter the information again
             if (AdminMenu.isDenied()) {
-                enterCheckInDate();
+                findAndReserveARoom();
             } else {
 
-                // if user enter "y", reserve the room and print the reservation
+                // if user enters "y", reserve the room and print the reservation
                 Customer customer = hotelResource.getCustomer(emailInput);
                 Reservation reservation = hotelResource.reserveARoom(customer, roomToReserve, checkInDateInput, checkOutDateInput);
                 System.out.println(reservation);
 
             }
 
-        } catch (ParseException e) {
-            System.out.println("Invalid format for date. Please use the format (dd/mm/yyyy).");
-            findAndReserveARoom(checkInDateInput);
         } catch (NullPointerException e) {
             System.out.println(e.getLocalizedMessage());
+            findAndReserveARoom();
         }
 
     }
@@ -230,21 +208,21 @@ public class MainMenu {
             try {
 
                 System.out.println("Have you created an account yet? (y/n)");
-                // if user enter "n", ask if they want to create an account
+                // if user enters "n", ask if they want to create an account
                 if (AdminMenu.isDenied()) {
 
                     System.out.println("Would you like to create an account first? (y/n)");
-                    // if user enter "n", back to main menu and break the loop
+                    // if user enters "n", back to main menu and break the loop
                     if (AdminMenu.isDenied()) {
                         MainMenu.main(null);
                         break;
                     }
-                    // if user enter "y", go to create an account
+                    // if user enters "y", go to create an account
                     createAnAccount();
 
                 }
 
-                // if user enter "y", ask user to enter their email
+                // if user enters "y", ask user to enter their email
                 String emailInput = handleEmailInput("see my reservations");
 
                 Map<Long, Reservation> myReservations = hotelResource.getReservationsOfACustomer(emailInput);
@@ -269,11 +247,11 @@ public class MainMenu {
                 }
 
                 System.out.println("Back to Main Menu? (y/n)");
-                // if user enter "n", call this function again
+                // if user enters "n", call this function again
                 if (AdminMenu.isDenied()) {
                     seeMyReservations();
                 } else {
-                    // if user enter "y", return to main menu and break the loop
+                    // if user enters "y", return to main menu and break the loop
                     MainMenu.main(null);
                     break;
                 }
@@ -282,11 +260,11 @@ public class MainMenu {
 
                 System.out.println("You haven't made any reservation yet.");
                 System.out.println("Back to Main Menu? (y/n)");
-                // if user enter "n", call this function again
+                // if user enters "n", call this function again
                 if (AdminMenu.isDenied()) {
                     seeMyReservations();
                 } else {
-                    // if user enter "y", return to main menu and break the loop
+                    // if user enters "y", return to main menu and break the loop
                     MainMenu.main(null);
                     break;
                 }
@@ -313,14 +291,49 @@ public class MainMenu {
         // ask user to confirm their inputs
         System.out.printf("\nFirst name: %s, Last name: %s, Email: %s", firstNameInput, lastNameInput, emailInput);
         System.out.println("\nConfirm? (y/n)");
-        // if user enter "n", ask them to enter the inputs again
+        // if user enters "n", ask them to enter the inputs again
         if (AdminMenu.isDenied()) {
             createAnAccount();
         }
-        // if user enter "y", create an account for them
+        // if user enters "y", create an account for them
         hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
         System.out.println("Account created successfully.");
 
     }
+
+    // source: https://stackoverflow.com/questions/226910/how-to-sanity-check-a-date-in-java
+    public static boolean isDateValid(String date) {
+
+        try {
+            dateFormat.setLenient(false);
+            dateFormat.parse(date);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+
+    }
+
+    public static Date handleDateInput() {
+
+        try {
+
+            String dateInput = scanner.nextLine();
+
+            // make sure the date input matches the pattern required, before returning the value
+            while (!isDateValid(dateInput)) {
+                System.out.println("Invalid format for date. Please use the format (dd/mm/yyyy): ");
+                dateInput = scanner.nextLine();
+            }
+            return dateFormat.parse(dateInput);
+
+        } catch (ParseException e) {
+            System.out.println("Invalid format for date. Please use the format (dd/mm/yyyy): ");
+            handleDateInput();
+        }
+        return null;
+
+    }
+
 
 }
