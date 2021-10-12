@@ -89,47 +89,42 @@ public class AdminMenu {
     // handle option 1: See all Customers
     public static void seeAllCustomers() {
 
-        boolean keepRunning = true;
+        try {
 
-        while (keepRunning) {
-            try {
+            Map<String, Customer> customers = adminResource.getAllCustomers();
+            int i = 1;
 
-                Map<String, Customer> customers = adminResource.getAllCustomers();
-                int i = 1;
+            if (customers.isEmpty()) {
+                System.out.println("\nSorry, the customer list is empty.");
+            } else {
 
-                if (customers.isEmpty()) {
-                    System.out.println("\nSorry, the customer list is empty.");
-                    keepRunning = false;
-                } else {
+                // print the customer list
+                System.out.print("\nCustomer List: ");
+                for (Customer customer : customers.values()) {
+                    System.out.printf("\n%d. %s", i, customer);
+                    i++;
 
-                    // print the customer list
-                    System.out.print("\nCustomer List: ");
-                    for (Customer customer : customers.values()) {
-                        System.out.printf("\n%d. %s", i, customer);
-                        i++;
-
-                        if (i == customers.size() + 1) {
-                            System.out.println();
-                        }
+                    if (i == customers.size() + 1) {
+                        System.out.println();
                     }
-                    System.out.println();
-
                 }
+                System.out.println();
 
-                System.out.println("Back to Admin Menu? (y/n)");
-                String confirmOption = handleConfirmOptions();
-
-                if (confirmOption.equals("y")) {
-                    keepRunning = false;
-                } else if (confirmOption.equals("n")) {
-                    seeAllCustomers();
-                }
-
-            } catch (NullPointerException e) {
-                System.out.println("Sorry, the customer list is empty.");
             }
+
+            System.out.println("Back to Admin Menu? (y/n)");
+            String confirmOption = handleConfirmOptions();
+
+            if (confirmOption.equals("y")) {
+                printAdminMenu();
+            } else if (confirmOption.equals("n")) {
+                seeAllCustomers();
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println("Sorry, the customer list is empty.");
+            seeAllCustomers();
         }
-        printAdminMenu();
 
     }
 
