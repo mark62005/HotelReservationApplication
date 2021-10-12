@@ -54,4 +54,12 @@ public class HotelResource {
         return reservationService.getReservationsOfACustomer(email);
     }
 
+    public Date getAlternativeCheckInDate() {
+        return reservationService.getAlternativeCheckInDate();
+    }
+
+    public Date getAlternativeCheckOutDate() {
+        return reservationService.getAlternativeCheckOutDate();
+    }
+
 }

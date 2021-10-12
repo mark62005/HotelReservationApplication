@@ -13,6 +13,8 @@ public class ReservationService {
     private static ReservationService instance;
     private final Map<String, IRoom> rooms = new HashMap<>();
     private final Map<Long, Reservation> reservations = new HashMap<>();
+    private Date alternativeCheckInDate;
+    private Date alternativeCheckOutDate;
 
     // provide a static reference for Singleton Pattern
     private ReservationService(){}
@@ -49,6 +51,10 @@ public class ReservationService {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
 
         reservations.put(reservation.getId(), reservation);
+
+        // reset the alternative date range after making a reservation
+        alternativeCheckInDate = new Date();
+        alternativeCheckOutDate = new Date();
         // return reservation to display it for customer
         return reservation;
 
@@ -87,8 +93,8 @@ public class ReservationService {
 
         // if all the rooms are booked for the original date range, add the date range for 7 days,
         //  and recommend a room list for that date range
-        Date alternativeCheckInDate = addDays(checkInDate, 7);
-        Date alternativeCheckOutDate = addDays(checkOutDate, 7);
+        alternativeCheckInDate = addDays(checkInDate, 7);
+        alternativeCheckOutDate = addDays(checkOutDate, 7);
 
         // base case: if the available room list is not empty, return that list
         if (!findAvailableRooms(alternativeCheckInDate, alternativeCheckOutDate).isEmpty()) {
@@ -97,6 +103,14 @@ public class ReservationService {
         // recursive case
         return recommendAlternatives(alternativeCheckInDate, alternativeCheckOutDate);
 
+    }
+
+    public Date getAlternativeCheckInDate() {
+        return alternativeCheckInDate;
+    }
+
+    public Date getAlternativeCheckOutDate() {
+        return alternativeCheckOutDate;
     }
 
     public Map<Long, Reservation> getReservationsOfACustomer(String email) {

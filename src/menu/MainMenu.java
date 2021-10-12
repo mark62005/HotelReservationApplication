@@ -144,17 +144,28 @@ public class MainMenu {
                 findAndReserveARoom();
             }
 
+            Date finalCheckInDate = checkInDateInput;
+            Date finalCheckOutDate = checkOutDateInput;
+
             // if user enters "y"
             // get a list of available rooms for that date range
             List<IRoom> availableRooms = hotelResource.findAvailableRooms(checkInDateInput, checkOutDateInput);
 
             // if the list of available rooms is empty, recommend alternatives by adding the date range for 7
             if (availableRooms.isEmpty()) {
+
+                System.out.println("Sorry, all the rooms are booked for this date range.");
+                System.out.println("Looking for recommendations for you...");
                 hotelResource.recommendAlternatives(checkInDateInput, checkOutDateInput);
+
+                finalCheckInDate = hotelResource.getAlternativeCheckInDate();
+                finalCheckOutDate = hotelResource.getAlternativeCheckOutDate();
+
             }
 
             // print the list of available rooms
-            System.out.print("\nRooms that are available: ");
+            System.out.printf("\nRooms that are available for %s - %s: ",
+                    dateFormat.format(finalCheckInDate), dateFormat.format(finalCheckOutDate));
             for (int i = 0; i < availableRooms.size(); i++) {
                 System.out.printf("\n%d. %s", i + 1, availableRooms.get(i).getRoomNumber());
                 if (i == availableRooms.size() - 1) {
@@ -179,8 +190,11 @@ public class MainMenu {
             String emailInput = handleEmailInput("reserve a room");
 
             // ask user to confirm the info before making the reservation
-            System.out.printf("\nCheck-in date: %s, Check-out date: %s, Room number: %s, Email: %s",
-                    dateFormat.format(checkInDateInput), dateFormat.format(checkOutDateInput), roomNumberInput, emailInput);
+            System.out.printf(
+                    "\nCheck-in date: %s, Check-out date: %s, Room number: %s, Email: %s",
+                    dateFormat.format(finalCheckInDate), dateFormat.format(finalCheckOutDate),
+                    roomNumberInput, emailInput
+            );
             System.out.println("\nConfirm the above information? (y/n)");
             // if user enters "n", ask them to enter the information again
             if (AdminMenu.isDenied()) {
@@ -189,7 +203,7 @@ public class MainMenu {
 
                 // if user enters "y", reserve the room and print the reservation
                 Customer customer = hotelResource.getCustomer(emailInput);
-                Reservation reservation = hotelResource.reserveARoom(customer, roomToReserve, checkInDateInput, checkOutDateInput);
+                Reservation reservation = hotelResource.reserveARoom(customer, roomToReserve, finalCheckInDate, finalCheckOutDate);
                 System.out.println(reservation);
 
             }
