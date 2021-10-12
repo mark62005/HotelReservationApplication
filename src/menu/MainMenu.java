@@ -100,6 +100,7 @@ public class MainMenu {
         // make sure the email format is valid
         while (!isEmailFormatValid(emailInput)) {
             System.out.println("Invalid format. Valid format for email: 'domain@email.com', please try again.");
+            System.out.println("Please enter your email: ");
             emailInput = scanner.nextLine();
         }
 
@@ -107,6 +108,7 @@ public class MainMenu {
             // make sure the email exists in the customer map
             while (!adminResource.getAllCustomers().containsKey(emailInput)) {
                 System.out.println("This email doesn't exist, please try another one.");
+                System.out.println("Please enter your email: ");
                 emailInput = scanner.nextLine();
             }
             return emailInput;
