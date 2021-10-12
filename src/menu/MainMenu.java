@@ -156,6 +156,14 @@ public class MainMenu {
 
             }
 
+            System.out.printf("\nCheck-in date: %s, check-out date: %s", dateFormat.format(checkInDateInput), dateFormat.format(checkOutDateInput));
+            System.out.println("\nConfirm this date range? (y/n)");
+            // if user enter "n", ask them to enter the data range again
+            if (AdminMenu.isDenied()) {
+                enterCheckInDate();
+            }
+
+            // if user enter "y"
             // get a list of available rooms for that date range
             List<IRoom> availableRooms = hotelResource.findAvailableRooms(checkInDateInput, checkOutDateInput);
 
@@ -165,9 +173,12 @@ public class MainMenu {
             }
 
             // print the list of available rooms
-            System.out.println("Rooms that are available: ");
+            System.out.print("\nRooms that are available: ");
             for (int i = 0; i < availableRooms.size(); i++) {
-                System.out.printf("\n%d\\. %s", i + 1, availableRooms.get(i).getRoomNumber());
+                System.out.printf("\n%d. %s", i + 1, availableRooms.get(i).getRoomNumber());
+                if (i == availableRooms.size() - 1) {
+                    System.out.println();
+                }
             }
 
             // ask user to choose a room from the list
@@ -186,11 +197,21 @@ public class MainMenu {
             // ask user to enter their email
             String emailInput = handleEmailInput("reserve a room");
 
-            Customer customer = hotelResource.getCustomer(emailInput);
+            // ask user to confirm the info before making the reservation
+            System.out.printf("\nCheck-in date: %s, Check-out date: %s, Room number: %s, Email: %s",
+                    dateFormat.format(checkInDateInput), dateFormat.format(checkOutDateInput), roomNumberInput, emailInput);
+            System.out.println("\nConfirm the above information? (y/n)");
+            // if user enter "n", ask them to enter the information again
+            if (AdminMenu.isDenied()) {
+                enterCheckInDate();
+            } else {
 
-            // reserve the room and print the reservation
-            Reservation reservation = hotelResource.reserveARoom(customer, roomToReserve, checkInDateInput, checkOutDateInput);
-            System.out.println(reservation);
+                // if user enter "y", reserve the room and print the reservation
+                Customer customer = hotelResource.getCustomer(emailInput);
+                Reservation reservation = hotelResource.reserveARoom(customer, roomToReserve, checkInDateInput, checkOutDateInput);
+                System.out.println(reservation);
+
+            }
 
         } catch (ParseException e) {
             System.out.println("Invalid format for date. Please use the format (dd/mm/yyyy).");
