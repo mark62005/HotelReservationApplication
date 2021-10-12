@@ -235,12 +235,14 @@ public class MainMenu {
         // ask user to enter their email
         String emailInput = handleEmailInput("create account");
 
+        // ask user to confirm their inputs
         System.out.printf("\nFirst name: %s, Last name: %s, Email: %s", firstNameInput, lastNameInput, emailInput);
         System.out.println("\nConfirm? (y/n)");
-
+        // if user enter "n", ask them to enter the inputs again
         if (AdminMenu.isDenied()) {
             createAnAccount();
         }
+        // if user enter "y", create an account for them
         hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
         System.out.println("Account created successfully.");
 
