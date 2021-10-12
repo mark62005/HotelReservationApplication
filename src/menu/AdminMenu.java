@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AdminMenu {
 
@@ -40,6 +41,7 @@ public class AdminMenu {
                     case 3 -> seeAllReservations();
                     case 4 -> addARoom();
                     case 5 -> addTestData();
+                    case 6 -> clearTestData();
                     case 7 -> {
                         MainMenu.main(null);
                         keepRunning = false;
@@ -342,6 +344,28 @@ public class AdminMenu {
         hotelResource.reserveARoom(max, room2, checkInDate2, checkOutDate2);
         hotelResource.reserveARoom(frieda, room3, checkInDate3, checkOutDate3);
         hotelResource.reserveARoom(carla, room4, checkInDate4, checkOutDate4);
+
+    }
+
+    // handle option 6: Clear test data
+    public static void clearTestData() {
+
+    }
+
+    // clear the reservation sample data
+    public static void clearReservationSamples() {
+
+        List<Long> data = adminResource.getAllReservations().values().stream()
+                .filter(r -> r.getCustomer().getEmail().contains("test."))
+                .map(Reservation::getId)
+                .collect(Collectors.toList());
+        for (long id : data
+        ) {
+            adminResource.cancelReservation(id);
+        }
+
+        System.out.println("Test data cleared successfully.");
+        printAdminMenu();
 
     }
 
