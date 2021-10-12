@@ -108,8 +108,8 @@ public class ReservationService {
 
     }
 
-    public List<Reservation> getAllReservations() {
-        return (List<Reservation>) reservations.values();
+    public Map<Long, Reservation> getAllReservations() {
+        return reservations;
     }
 
     public void cancelReservation(long id) {

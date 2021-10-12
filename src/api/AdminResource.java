@@ -37,8 +37,12 @@ public class AdminResource {
         return customerService.getAllCustomers();
     }
 
-    public List<Reservation> getAllReservations() {
+    public Map<Long, Reservation> getAllReservations() {
         return reservationService.getAllReservations();
+    }
+
+    public void cancelReservation(long id) {
+        reservationService.cancelReservation(id);
     }
 
 }

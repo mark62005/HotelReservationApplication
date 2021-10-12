@@ -175,7 +175,7 @@ public class AdminMenu {
 
         try {
 
-            List<Reservation> reservations = adminResource.getAllReservations();
+            Map<Long, Reservation> reservations = adminResource.getAllReservations();
 
             if (reservations.isEmpty()) {
                 System.out.println("Sorry, the reservation list is empty.");
@@ -184,7 +184,7 @@ public class AdminMenu {
                 int i = 1;
                 // print the reservation list
                 System.out.print("\nReservation List: ");
-                for (Reservation reservation : reservations) {
+                for (Reservation reservation : reservations.values()) {
                     System.out.printf("\n%d. %s", i, reservation);
                     i++;
 
