@@ -25,10 +25,11 @@ public class MainMenu {
 
         boolean keepRunning = true;
 
-        // display initial menu
-        printMainMenu();
-
         while (keepRunning) {
+
+            // display initial menu
+            printMainMenu();
+
             try {
 
                 // ask user to enter their option
@@ -57,6 +58,7 @@ public class MainMenu {
                 System.out.println("Invalid input. Please enter your option again (1 - 5): ");
                 MainMenu.main(null);
             }
+
         }
 
     }
@@ -233,8 +235,18 @@ public class MainMenu {
         // ask user to enter their email
         String emailInput = handleEmailInput("create account");
 
-        hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
-        System.out.println("Account created successfully.");
+        System.out.printf("\nFirst name: %s, Last name: %s, Email: %s", firstNameInput, lastNameInput, emailInput);
+        System.out.println("\nConfirm? (y/n)");
+
+        String confirmOption = AdminMenu.handleConfirmOptions();
+        if (confirmOption.equals("y")) {
+
+            hotelResource.addCustomer(firstNameInput, lastNameInput, emailInput);
+            System.out.println("Account created successfully.");
+
+        } else if (confirmOption.equals("n")) {
+            createAnAccount();
+        }
 
     }
 
