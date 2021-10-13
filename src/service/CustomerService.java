@@ -5,6 +5,7 @@ import model.Customer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class CustomerService {
@@ -25,19 +26,27 @@ public class CustomerService {
 
     public void addCustomer(String firstName, String lastName, String email) {
 
-        Customer customer = new Customer(firstName, lastName, email);
+        String emailRegex = "^(.+)@(.+)\\.com$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // check if email format matches "domain@email.com"
+        if (!pattern.matcher(email).matches()) {
+            throw new IllegalArgumentException("Invalid format. Valid format for email: 'domain@email.com', please try again.");
+        }
 
         // make sure all te emails in customer map are unique
-        if (getAllCustomers().containsKey(email)) {
+        if (customers.containsKey(email)) {
             throw new IllegalArgumentException("Error! This email is taken, please try another one.");
         }
-        getAllCustomers().put(email, customer);
+
+        Customer customer = new Customer(firstName, lastName, email);
+        customers.put(email, customer);
 
     }
 
     public Customer getCustomer(String email) {
 
-        return getAllCustomers().getOrDefault(email, null);
+        return customers.getOrDefault(email, null);
 
     }
 
