@@ -67,12 +67,26 @@ public class ReservationService {
             throw new NullPointerException("Sorry, there is no rooms created in our database.");
         }
 
-        return reservations.stream()
+        Set<IRoom> availableRooms = reservations.stream()
                 // filter reservations which the check-in date input is after the check-out date of that reservation
                 //  and the check-out date input is before the check-in date of that reservation
                 .filter(r -> r.getCheckInDate().after(checkOutDate) || r.getCheckOutDate().before(checkInDate))
                 .map(Reservation::getRoom)
-                // sort the room list
+                .collect(Collectors.toSet());
+
+        // find rooms
+        Set<IRoom> roomList = new LinkedHashSet<>();
+        for (IRoom room : rooms.values()) {
+            for (Reservation r : reservations) {
+                if (!r.getRoom().getRoomNumber().equals(room.getRoomNumber())) {
+                    roomList.add(room);
+                }
+            }
+        }
+
+        availableRooms.addAll(roomList);
+        return availableRooms.stream()
+                // sort the available room list
                 .sorted(Comparator.comparing(IRoom::getRoomNumber))
                 .collect(Collectors.toList());
 
