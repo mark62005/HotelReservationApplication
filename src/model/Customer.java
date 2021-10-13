@@ -16,6 +16,10 @@ public class Customer {
 
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
     public String getEmail() {
         return email;
     }

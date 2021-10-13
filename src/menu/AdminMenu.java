@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AdminMenu {
 
@@ -94,16 +95,19 @@ public class AdminMenu {
 
         try {
 
-            Map<String, Customer> customers = adminResource.getAllCustomers();
-            int i = 1;
+            List<Customer> customers =
+                    adminResource.getAllCustomers().values().stream()
+                            .sorted(Comparator.comparing(Customer::getFirstName))
+                            .collect(Collectors.toList());
 
             if (customers.isEmpty()) {
                 System.out.println("\nSorry, the customer list is empty.");
             } else {
 
+                int i = 1;
                 // print the customer list
                 System.out.print("\nCustomer List: ");
-                for (Customer customer : customers.values()) {
+                for (Customer customer : customers) {
                     System.out.printf("\n%d. %s", i, customer);
                     i++;
 
@@ -135,16 +139,19 @@ public class AdminMenu {
 
         try {
 
-            Map<String, IRoom> rooms = adminResource.getAllRooms();
-            int i = 1;
+            List<IRoom> rooms =
+                    adminResource.getAllRooms().values().stream()
+                            .sorted(Comparator.comparing(IRoom::getRoomNumber))
+                            .collect(Collectors.toList());
 
             if (rooms.isEmpty()) {
                 System.out.println("Sorry, the room list is empty.");
             } else {
 
+                int i = 1;
                 // print the room list
                 System.out.print("\nRoom List: ");
-                for (IRoom room : rooms.values()) {
+                for (IRoom room : rooms) {
                     System.out.printf("\n%d. %s", i, room);
                     i++;
 
@@ -273,12 +280,19 @@ public class AdminMenu {
     // handle option 5: Add test data
     public static void addTestData() {
 
-        addCustomerSamples();
-        addRoomSamples();
-        addReservationSamples();
+        try {
 
-        System.out.println("Sample data added successfully.");
-        printAdminMenu();
+            addCustomerSamples();
+            addRoomSamples();
+            addReservationSamples();
+
+            System.out.println("Sample data added successfully.");
+            printAdminMenu();
+
+        } catch (IllegalArgumentException e) {
+            System.out.println("Sorry, you've added test data already.");
+            printAdminMenu();
+        }
 
     }
 
