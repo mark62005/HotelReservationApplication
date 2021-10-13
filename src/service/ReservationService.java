@@ -67,6 +67,7 @@ public class ReservationService {
             throw new NullPointerException("Sorry, there is no rooms created in our database.");
         }
 
+        // get a set of available rooms which are already reserved in other date range
         Set<IRoom> availableRooms = reservations.stream()
                 // filter reservations which the check-in date input is after the check-out date of that reservation
                 //  and the check-out date input is before the check-in date of that reservation
@@ -74,7 +75,7 @@ public class ReservationService {
                 .map(Reservation::getRoom)
                 .collect(Collectors.toSet());
 
-        // find rooms
+        // get a set of rooms that don't have any reservation made
         Set<IRoom> roomList = new LinkedHashSet<>();
         for (IRoom room : rooms.values()) {
             for (Reservation r : reservations) {
@@ -84,6 +85,7 @@ public class ReservationService {
             }
         }
 
+        // combine the 2 sets together and return it as a list
         availableRooms.addAll(roomList);
         return availableRooms.stream()
                 // sort the available room list
