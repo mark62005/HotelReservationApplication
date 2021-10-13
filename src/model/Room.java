@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Room implements IRoom {
 
-    private String roomNumber;
-    private Double roomPrice;
-    private RoomType roomType;
+    private final String roomNumber;
+    private final Double roomPrice;
+    private final RoomType roomType;
 
     public Room(String roomNumber, Double roomPrice, RoomType roomType) {
         this.roomNumber = roomNumber;
@@ -20,26 +20,14 @@ public class Room implements IRoom {
         return roomNumber;
     }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
     @Override
     public Double getRoomPrice() {
         return roomPrice;
     }
 
-    public void setRoomPrice(Double roomPrice) {
-        this.roomPrice = roomPrice;
-    }
-
     @Override
     public RoomType getRoomType() {
         return roomType;
-    }
-
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
     }
 
     @Override
