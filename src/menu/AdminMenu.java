@@ -175,25 +175,36 @@ public class AdminMenu {
 
         try {
 
-            Map<Long, Reservation> reservations = adminResource.getAllReservations();
+            Set<Reservation> reservations = adminResource.getAllReservations();
 
             if (reservations.isEmpty()) {
                 System.out.println("Sorry, the reservation list is empty.");
             } else {
 
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 int i = 1;
+
                 // print the reservation list
                 System.out.print("\nReservation List: ");
-                for (Reservation reservation : reservations.values()) {
-                    System.out.printf("\n%d. %s", i, reservation);
+                for (Reservation r : reservations) {
+//                    System.out.printf("\n%d. %s, %s, %s, %s", i, reservation);
+                    System.out.printf("""
+                            
+                            %d. %s,
+                                %s,
+                                Check-in date: %s,
+                                Check-out date: %s
+                            """, i,
+                            r.getCustomer(), r.getRoom(),
+                            dateFormat.format(r.getCheckInDate()),
+                            dateFormat.format(r.getCheckOutDate())
+                    );
                     i++;
 
-                    if (i == reservations.size() + 1) {
-                        System.out.println();
-                    }
                 }
                 System.out.println();
 
+//                System.out.println(reservations);
             }
 
             System.out.println("Back to Admin Menu? (y/n)");
@@ -300,9 +311,9 @@ public class AdminMenu {
     public static void addReservationSamples() {
 
         Customer john = hotelResource.getCustomer("test.john@email.com");
-        Customer max = hotelResource.getCustomer("test.Reginald.Medina@webmail.com");
-        Customer frieda = hotelResource.getCustomer("test.glen.lane@example.com");
-        Customer carla = hotelResource.getCustomer("test.brad.gibson@domain.com");
+        Customer reginald = hotelResource.getCustomer("test.Reginald.Medina@webmail.com");
+        Customer glen = hotelResource.getCustomer("test.glen.lane@example.com");
+        Customer brad = hotelResource.getCustomer("test.brad.gibson@domain.com");
 
         IRoom room1 = hotelResource.getRoom("104_test");
         IRoom room2 = hotelResource.getRoom("102_test");
@@ -328,8 +339,8 @@ public class AdminMenu {
             checkInDate2 = dateFormat.parse("04/01/2022");
             checkOutDate2 = dateFormat.parse("12/01/2022");
 
-            checkInDate3 = dateFormat.parse("26/12/2022");
-            checkOutDate3 = dateFormat.parse("27/12/2022");
+            checkInDate3 = dateFormat.parse("26/12/2021");
+            checkOutDate3 = dateFormat.parse("27/12/2021");
 
             checkInDate4 = dateFormat.parse("12/12/2021");
             checkOutDate4 = dateFormat.parse("19/01/2022");
@@ -339,9 +350,9 @@ public class AdminMenu {
         }
 
         hotelResource.reserveARoom(john, room1, checkInDate1, checkOutDate1);
-        hotelResource.reserveARoom(max, room2, checkInDate2, checkOutDate2);
-        hotelResource.reserveARoom(frieda, room3, checkInDate3, checkOutDate3);
-        hotelResource.reserveARoom(carla, room4, checkInDate4, checkOutDate4);
+        hotelResource.reserveARoom(reginald, room2, checkInDate2, checkOutDate2);
+        hotelResource.reserveARoom(glen, room3, checkInDate3, checkOutDate3);
+        hotelResource.reserveARoom(brad, room4, checkInDate4, checkOutDate4);
 
     }
 

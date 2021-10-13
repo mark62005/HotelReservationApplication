@@ -7,6 +7,7 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Map;
+import java.util.Set;
 
 public class AdminResource {
 
@@ -36,7 +37,7 @@ public class AdminResource {
         return customerService.getAllCustomers();
     }
 
-    public Map<Long, Reservation> getAllReservations() {
+    public Set<Reservation> getAllReservations() {
         return reservationService.getAllReservations();
     }
 

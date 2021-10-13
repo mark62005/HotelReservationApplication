@@ -12,7 +12,7 @@ public class ReservationService {
 
     private static ReservationService instance;
     private final Map<String, IRoom> rooms = new HashMap<>();
-    private final Map<Long, Reservation> reservations = new HashMap<>();
+    private final Set<Reservation> reservations = new HashSet<>();
     private Date alternativeCheckInDate;
     private Date alternativeCheckOutDate;
 
@@ -50,7 +50,7 @@ public class ReservationService {
 
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
 
-        reservations.put(reservation.getId(), reservation);
+        reservations.add(reservation);
 
         // reset the alternative date range after making a reservation
         alternativeCheckInDate = new Date();
@@ -64,10 +64,10 @@ public class ReservationService {
 
         // if the room list is empty, throw an Exception
         if (rooms.isEmpty()) {
-            throw new NullPointerException("Sorry, there is no rooms created in our database");
+            throw new NullPointerException("Sorry, there is no rooms created in our database.");
         }
 
-        return reservations.values().stream()
+        return reservations.stream()
                 // filter reservations which the check-in date input is after the check-out date of that reservation
                 //  and the check-out date input is before the check-in date of that reservation
                 .filter(r -> r.getCheckInDate().after(checkOutDate) || r.getCheckOutDate().before(checkInDate))
@@ -90,6 +90,11 @@ public class ReservationService {
     }
 
     public List<IRoom> recommendAlternatives(Date checkInDate, Date checkOutDate) {
+
+        // if the room list is empty, throw an Exception
+        if (rooms.isEmpty()) {
+            throw new NullPointerException("Sorry, there is no rooms created in our database.");
+        }
 
         // if all the rooms are booked for the original date range, add the date range for 7 days,
         //  and recommend a room list for that date range
@@ -116,24 +121,24 @@ public class ReservationService {
     public Map<Long, Reservation> getReservationsOfACustomer(String email) {
 
         // find reservation which matches the same email, and return a new list
-        return reservations.values().stream()
+        return reservations.stream()
                 .filter((r) -> r.getCustomer().getEmail().equals(email.toLowerCase(Locale.ROOT)))
                 .collect(Collectors.toMap(Reservation::getId, Function.identity()));
 
     }
 
-    public Map<Long, Reservation> getAllReservations() {
+    public Set<Reservation> getAllReservations() {
         return reservations;
     }
 
     public void cancelReservation(long id) {
-        reservations.remove(id);
+        reservations.removeIf(reservation -> reservation.getId() == id);
     }
 
     public void clearReservationSamples() {
 
         // find the list of reservation ids that contain "test."
-        List<Long> ids = reservations.values().stream()
+        List<Long> ids = reservations.stream()
                 .filter(r -> r.getCustomer().getEmail().contains("test."))
                 .map(Reservation::getId)
                 .collect(Collectors.toList());

@@ -23,6 +23,10 @@ public class MainMenu {
 
         boolean keepRunning = true;
 
+        if (adminResource.getAllRooms().isEmpty()) {
+            AdminMenu.addTestData();
+        }
+
         while (keepRunning) {
 
             // display initial menu
@@ -210,7 +214,7 @@ public class MainMenu {
 
         } catch (NullPointerException e) {
             System.out.println(e.getLocalizedMessage());
-            findAndReserveARoom();
+            MainMenu.main(null);
         }
 
     }

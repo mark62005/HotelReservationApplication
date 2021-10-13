@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Reservation {
@@ -66,11 +68,14 @@ public class Reservation {
 
     @Override
     public String toString() {
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
         return "Reservation{ " +
                 customer +
                 ", " + room +
-                ", Check-in date: " + checkInDate +
-                ", Check-out date: " + checkOutDate +
+                ", Check-in date: " + dateFormat.format(checkInDate) +
+                ", Check-out date: " + dateFormat.format(checkOutDate) +
                 " }";
     }
 
