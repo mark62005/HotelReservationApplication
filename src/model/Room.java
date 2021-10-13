@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class Room implements IRoom {
 
@@ -42,11 +43,26 @@ public class Room implements IRoom {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return Objects.equals(roomNumber, room.roomNumber) &&
+                Objects.equals(roomPrice, room.roomPrice) &&
+                roomType == room.roomType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(roomNumber, roomPrice, roomType);
+    }
+
+    @Override
     public String toString() {
         return "Room{ " +
                 "Room number: '" + roomNumber + '\'' +
                 ", Room price per night: $" + roomPrice +
-                ", Room type: '" + String.valueOf(roomType).toLowerCase(Locale.ROOT) + '\'' +
+                ", Room type: '" + String.valueOf(roomType).toLowerCase(Locale.ROOT) + " room'" +
                 " }";
     }
 

@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class Reservation {
 
@@ -64,6 +65,23 @@ public class Reservation {
 
     public void setCheckOutDate(Date checkOutDate) {
         this.checkOutDate = checkOutDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return id == that.id &&
+                Objects.equals(customer, that.customer) &&
+                Objects.equals(room, that.room) &&
+                Objects.equals(checkInDate, that.checkInDate) &&
+                Objects.equals(checkOutDate, that.checkOutDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, customer, room, checkInDate, checkOutDate);
     }
 
     @Override
